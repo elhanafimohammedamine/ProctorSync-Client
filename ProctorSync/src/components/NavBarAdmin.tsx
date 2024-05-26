@@ -9,6 +9,8 @@ import {
 import {Button} from "@/components/ui/button.tsx";
 import {ModeToggle} from "@/components/mode-toggle.tsx";
 import CustomNavLink from "@/components/CustomNavLink.tsx";
+import LogoDarkImage from "@/assets/images/proctorsyncTypoDark.svg"
+import LogoLightImage from "@/assets/images/proctorsyncTypoLight.svg"
 export default function NavBarAdmin() {
 
     return (
@@ -26,8 +28,8 @@ export default function NavBarAdmin() {
                     <nav className="grid gap-4 text-lg font-medium">
                         <Link to="#" className="flex mb-2">
                             <span className=" h-12">
-                                <img className="hidden dark:block h-full w-full object-cover" src=""/>
-                                <img className="dark:hidden h-full w-full object-cover" src=""/>
+                                <img className="hidden dark:block h-full w-full object-cover" src={LogoDarkImage}/>
+                                <img className="dark:hidden h-full w-full object-cover" src={LogoLightImage}/>
                             </span>
                         </Link>
                         <Link to="#"

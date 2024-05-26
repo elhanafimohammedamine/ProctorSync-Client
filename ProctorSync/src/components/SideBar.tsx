@@ -6,6 +6,7 @@ import {
     TooltipProvider,
 } from "@/components/ui/tooltip";
 import CustomNavLink from "@/components/CustomNavLink.tsx";
+import LogoImage from "@/assets/images/proctorsyncsvg.svg"
 
 export default function SideBar() {
     return (
@@ -13,7 +14,7 @@ export default function SideBar() {
             <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
                 <Link to="#" className="flex mb-2">
                     <span className=" h-12">
-                        <img className="h-full w-full object-cover" src=""/>
+                        <img className="h-full w-full object-cover" src={LogoImage}/>
                     </span>
                 </Link>
                 <TooltipProvider>

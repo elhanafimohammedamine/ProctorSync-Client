@@ -16,8 +16,8 @@ export default function DefaultLayoutAdmin() {
                     </div>
                 </div>
             </div>
-            <ScrollToTop />
-            <Footer />
+            <ScrollToTop/>
+            <Footer/>
         </>
     )
 }
