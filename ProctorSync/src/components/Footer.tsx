@@ -27,7 +27,7 @@ export function Footer() {
             <h3>
               &copy; 2024 ProctorSync {""}
               <span className="relative top-[-2px]">
-            <HeartFilledIcon className="w-4 h-4 inline-block"/>
+            <HeartFilledIcon className="w-4 h-4 text-red-500 inline-block"/>
           </span>
             </h3>
           </section>

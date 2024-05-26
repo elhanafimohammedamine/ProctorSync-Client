@@ -1,7 +1,10 @@
 import {createBrowserRouter} from "react-router-dom";
 import App from "@/App";
 import DefaultLayoutAdmin from "@/layout/DefaultLayoutAdmin.tsx";
-import StaffPage from "@/pages/StaffPage.tsx";
+import ProfessorsPage from "@/pages/ProfessorsPage.tsx";
+import PedagogicalElements from "@/pages/PedagogicalElements.tsx";
+
+
 
 
 export const router = createBrowserRouter([
@@ -10,10 +13,12 @@ export const router = createBrowserRouter([
         element: <App />,
         children: [
             {
-                path: "/home",
+                path: "",
                 element: <DefaultLayoutAdmin/>,
                 children: [
-                    {path: "staff", element: <StaffPage/>}
+                    {path: "enseignants", element: <ProfessorsPage/>},
+                    {path: "modules", element: <PedagogicalElements/>},
+
                 ]
             },
         ]

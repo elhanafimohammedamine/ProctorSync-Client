@@ -13,9 +13,13 @@ import {ScrollArea, ScrollBar} from "@/components/ui/scroll-area.tsx";
 import Paginator from "@/components/Paginator.tsx";
 import {Input} from "@/components/ui/input.tsx";
 import {useState} from "react";
+import CreateNewUserDialog from "@/components/CreateNewUserDialog.tsx";
 
-export default function StaffPage() {
+export default function ProfessorsPage() {
     const [currentPage, setCurrentPage] = useState<number>(1);
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // @ts-ignore
     const [totalPages, setTotalPages] = useState<number>(1);
 
     const handlePageChange = (currentPage : number) => {
@@ -26,11 +30,14 @@ export default function StaffPage() {
 
     return(
         <Card className="bg-card border-0" x-chunk="dashboard-06-chunk-0">
-            <CardHeader className="p-4 md:p-6">
-                <CardTitle className="text-2xl md:text-3xl">Personnel de la plateforme</CardTitle>
-                <CardDescription className="text-sm md:text-lg">
-                    Gérer le personnel de la plate-forme et consulter leurs coordonnées.
-                </CardDescription>
+            <CardHeader className="p-4 md:p-6 flex flex-row items-center justify-between">
+                <div>
+                    <CardTitle className="text-2xl md:text-3xl">Personnel de la plateforme</CardTitle>
+                    <CardDescription className="text-sm md:text-lg">
+                        Gérer le personnel de la plate-forme et consulter leurs coordonnées.
+                    </CardDescription>
+                </div>
+                <CreateNewUserDialog />
             </CardHeader>
             <CardContent className="p-4 md:p-6 overflow-hidden space-y-6 md:space-y-8">
                 <div className="relative flex-1 md:grow-0">
@@ -48,7 +55,8 @@ export default function StaffPage() {
                                 <TableHead className="hidden w-[100px] sm:table-cell">
                                     <span className="sr-only">Image</span>
                                 </TableHead>
-                                <TableHead>Nom Complet</TableHead>
+                                <TableHead>Prénom</TableHead>
+                                <TableHead>Nom</TableHead>
                                 <TableHead>Email</TableHead>
                                 <TableHead>Téléphone</TableHead>
                                 <TableHead>Type de personnel</TableHead>
@@ -76,7 +84,10 @@ export default function StaffPage() {
                                     </div>
                                 </TableCell>
                                 <TableCell className="font-medium">
-                                    firstName + lastName
+                                    firstName
+                                </TableCell>
+                                <TableCell className="font-medium">
+                                    lastname
                                 </TableCell>
                                 <TableCell>
                                     email
@@ -88,7 +99,7 @@ export default function StaffPage() {
                                     <Badge>Enseignant</Badge>
                                 </TableCell>
                                 <TableCell>
-                                    22-12-2024
+                                    22-12-2024 10:25:00 AM
                                 </TableCell>
                                 <TableCell>
                                     <DropdownMenu>
@@ -115,7 +126,7 @@ export default function StaffPage() {
                                 </TableCell>
                             </TableRow>
                             <TableRow className="bg-primary/5 dark:bg-muted/20 hover:bg-primary/10 dark:hover:bg-muted/10">
-                                <TableCell colSpan={7} className="w-full text-center font-medium">
+                                <TableCell colSpan={7} className="w-full text-center text-sm italic text-muted-foreground">
                                     Aucun Personnel
                                 </TableCell>
                             </TableRow>
