@@ -1,0 +1,96 @@
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card.tsx";
+import {Search} from "lucide-react";
+import {Input} from "@/components/ui/input.tsx";
+import {Button} from "@/components/ui/button.tsx";
+import {useState} from "react";
+import Paginator from "@/components/Paginator.tsx";
+import RoomCard from "@/components/RoomCard.tsx";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger
+} from "@/components/ui/dialog.tsx";
+import CreateRoomFrom from "@/components/CreateRoomFrom.tsx";
+import {cn} from "@/lib/utils.ts";
+import {buttonStyle} from "@/assets/style/CustomStyles.ts";
+
+export default function RoomsPage() {
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [totalPages, setTotalPages] = useState<number>(1);
+
+    const handlePageChange = (currentPage : number) => {
+        setCurrentPage(currentPage);
+    };
+
+
+    return(
+        <Card className="bg-transparent border-0 shadow-none">
+                <div className="flex flex-col md:flex-row justify-between md:items-center">
+                    <CardHeader className="px-4 md:px-6">
+                        <CardTitle className="text-2xl md:text-3xl">Gérer les salles</CardTitle>
+                        <CardDescription className="text-sm md:text-lg">Suivre et gérer tous les salles sur la plateforme</CardDescription>
+                    </CardHeader>
+                        <Dialog>
+                            <div className="px-4 md:px-6 w-full md:w-fit">
+                                <DialogTrigger className={cn(buttonStyle, "w-full")}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                         strokeWidth={1.5}
+                                         stroke="currentColor" className="size-5">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+                                    </svg>
+                                    <span>Ajouter Salle</span>
+                                </DialogTrigger>
+                            </div>
+                            <DialogContent className="max-h-screen max-w-xl">
+                                <DialogHeader>
+                                    <DialogTitle>Créer une salle</DialogTitle>
+                                    <DialogDescription>
+                                        Ajouter les informations nécessaires ici. Cliquez sur Créer lorsque vous avez
+                                        terminé.
+                                    </DialogDescription>
+                                </DialogHeader>
+                                <CreateRoomFrom/>
+                            </DialogContent>
+                        </Dialog>
+                </div>
+            <CardContent className="p-4 md:p-6 space-y-6 md:space-y-12">
+            <div className="relative flex-1 md:grow-0">
+                    <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground"/>
+                    <Input
+                        type="search"
+                        placeholder="Search..."
+                        className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
+                    />
+                </div>
+                <div className="flex flex-col gap-y-6 md:gap-y-12">
+                    <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5">
+                        <RoomCard/>
+                        <RoomCard/>
+                        <RoomCard/>
+                        <RoomCard/>
+                        <RoomCard/>
+
+                    </div>
+                    <Paginator
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={(pageNumber) => handlePageChange(pageNumber)}
+                        showPreviousNext
+                    />
+                </div>
+                <div
+                    className="min-h-96 flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
+                    x-chunk="dashboard-02-chunk-1">
+                    <div className="flex flex-col items-center gap-1 text-center">
+                        <h3 className="text-lg md:text-2xl font-medium tracking-tight">
+                            Aucune salle pour le moment
+                        </h3>
+                    </div>
+                </div>
+            </CardContent>
+        </Card>
+    )
+}

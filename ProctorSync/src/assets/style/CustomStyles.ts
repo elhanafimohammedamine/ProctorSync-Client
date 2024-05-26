@@ -1,0 +1,1 @@
+export const buttonStyle = "px-3 py-2 space-x-2 flex justify-center items-center text-sm font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90";

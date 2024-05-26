@@ -27,7 +27,7 @@ export function ScrollToTop() {
       {showTopBtn && (
         <Button
           onClick={goToTop}
-          className="fixed bottom-4 right-4 opacity-90 shadow-md"
+          className="fixed bottom-4 right-4 opacity-90 cursor-pointer z-40 shadow-md"
           size="icon"
         >
           <ArrowUpToLine className="h-4 w-4" />

@@ -14,6 +14,7 @@ import Paginator from "@/components/Paginator.tsx";
 import {Input} from "@/components/ui/input.tsx";
 import {useState} from "react";
 import CreateNewUserDialog from "@/components/CreateNewUserDialog.tsx";
+import {Avatar, AvatarFallback} from "@/components/ui/avatar.tsx";
 
 export default function ProfessorsPage() {
     const [currentPage, setCurrentPage] = useState<number>(1);
@@ -30,8 +31,8 @@ export default function ProfessorsPage() {
 
     return(
         <Card className="bg-card border-0" x-chunk="dashboard-06-chunk-0">
-            <CardHeader className="p-4 md:p-6 flex flex-row items-center justify-between">
-                <div>
+            <CardHeader className="px-4 md:px-6 flex flex-row items-center justify-between">
+                <div className="space-y-2">
                     <CardTitle className="text-2xl md:text-3xl">Personnel de la plateforme</CardTitle>
                     <CardDescription className="text-sm md:text-lg">
                         Gérer le personnel de la plate-forme et consulter leurs coordonnées.
@@ -74,14 +75,9 @@ export default function ProfessorsPage() {
                                                     src={user.profilePhoto ? HOST + user.profilePhoto : "/placeholder.svg"}
                                                     width="64"
                                                 />*/}
-                                    <div className="flex justify-center items-center text-white aspect-square rounded-md h-12 object-cover bg-gradient-to-r from-purple-500 to-indigo-500">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                             viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
-                                             className="size-6">
-                                            <path strokeLinecap="round" strokeLinejoin="round"
-                                                  d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/>
-                                        </svg>
-                                    </div>
+                                    <Avatar className="rounded-lg">
+                                        <AvatarFallback className="rounded-lg bg-gray-200 dark:bg-muted-foreground/15 font-medium">CN</AvatarFallback>
+                                    </Avatar>
                                 </TableCell>
                                 <TableCell className="font-medium">
                                     firstName
@@ -126,7 +122,7 @@ export default function ProfessorsPage() {
                                 </TableCell>
                             </TableRow>
                             <TableRow className="bg-primary/5 dark:bg-muted/20 hover:bg-primary/10 dark:hover:bg-muted/10">
-                                <TableCell colSpan={7} className="w-full text-center text-sm italic text-muted-foreground">
+                                <TableCell colSpan={8} className="w-full text-center text-sm italic text-muted-foreground">
                                     Aucun Personnel
                                 </TableCell>
                             </TableRow>
