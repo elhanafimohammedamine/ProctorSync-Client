@@ -1,4 +1,6 @@
 import { HeartFilledIcon } from "@radix-ui/react-icons";
+import LogoDarkImage from "@/assets/images/proctorsyncTypoDark.svg"
+import LogoLightImage from "@/assets/images/proctorsyncTypoLight.svg"
 
 export function Footer() {
   return (
@@ -9,12 +11,12 @@ export function Footer() {
             <a href="/" className="ml-2 font-bold text-xl flex">
               <div className="bg-transparent">
                 <img
-                    src=""
+                    src={LogoLightImage}
                     alt="Image"
                     className="dark:hidden w-[150px] object-cover"
                 />
                 <img
-                    src=""
+                    src={LogoDarkImage}
                     alt="Image"
                     className="hidden dark:block w-[150px] object-cover"
                 />
