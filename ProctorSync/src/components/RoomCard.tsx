@@ -21,17 +21,17 @@ import {buttonStyle} from "@/assets/style/CustomStyles.ts";
 export default function RoomCard() {
 
     return(
-        <Card className="flex flex-col justify-between gap-y-5 bg-card rounded-xl p-3 shadow-sm border-0">
+        <Card className="flex flex-col justify-between gap-y-5 bg-card rounded-xl p-3 shadow-sm ">
             <div className="space-y-4">
-                <CardHeader className="h-48 w-full rounded-lg overflow-hidden p-0">
+                <CardHeader className="h-48 w-full border rounded-lg overflow-hidden p-0">
                     <div className="h-full w-full dark:bg-gray-700 bg-gray-100 flex justify-center items-center text-2xl font-medium">
                         Salle 14
                     </div>
                 </CardHeader>
                 <CardContent className="p-0">
                     <p className="text-lg font-medium mb-4">Room Name here</p>
-                    <div className="flex flex-col md:flex-row gap-y-2 gap-x-3 font-medium">
-                        <div className="flex items-center gap-x-2">
+                    <div className="flex flex-col md:flex-row gap-y-2 gap-x-5 text-muted-foreground font-medium">
+                        <div className="flex items-center gap-x-1.5">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                                  stroke="currentColor" className="size-5">
                                 <path strokeLinecap="round" strokeLinejoin="round"
@@ -39,7 +39,7 @@ export default function RoomCard() {
                             </svg>
                             <span className="text-sm">Bloc A</span>
                         </div>
-                        <div className="flex items-center gap-x-2">
+                        <div className="flex items-center gap-x-1.5">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                                  stroke="currentColor" className="size-5">
                                 <path strokeLinecap="round" strokeLinejoin="round"
@@ -77,6 +77,9 @@ export default function RoomCard() {
                 </AlertDialog>
                     <Dialog>
                         <DialogTrigger className={cn(buttonStyle, "border bg-card text-accent-foreground hover:bg-muted/25")}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                            </svg>
                             <span>Modifier</span>
                         </DialogTrigger>
                         <DialogContent className="max-h-screen max-w-xl">

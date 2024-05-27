@@ -1,7 +1,6 @@
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card.tsx";
 import {Search} from "lucide-react";
 import {Input} from "@/components/ui/input.tsx";
-import {Button} from "@/components/ui/button.tsx";
 import {useState} from "react";
 import Paginator from "@/components/Paginator.tsx";
 import RoomCard from "@/components/RoomCard.tsx";
@@ -16,9 +15,12 @@ import {
 import CreateRoomFrom from "@/components/CreateRoomFrom.tsx";
 import {cn} from "@/lib/utils.ts";
 import {buttonStyle} from "@/assets/style/CustomStyles.ts";
+import ClassroomCard from "@/components/ClassroomCard.tsx";
 
-export default function RoomsPage() {
+export default function ClassRoomsPage() {
     const [currentPage, setCurrentPage] = useState<number>(1);
+
+    // @ts-ignore
     const [totalPages, setTotalPages] = useState<number>(1);
 
     const handlePageChange = (currentPage : number) => {
@@ -67,11 +69,7 @@ export default function RoomsPage() {
                 </div>
                 <div className="flex flex-col gap-y-6 md:gap-y-12">
                     <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5">
-                        <RoomCard/>
-                        <RoomCard/>
-                        <RoomCard/>
-                        <RoomCard/>
-                        <RoomCard/>
+                        <ClassroomCard />
 
                     </div>
                     <Paginator
@@ -85,7 +83,7 @@ export default function RoomsPage() {
                     className="min-h-96 flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
                     x-chunk="dashboard-02-chunk-1">
                     <div className="flex flex-col items-center gap-1 text-center">
-                        <h3 className="text-lg md:text-2xl font-medium tracking-tight">
+                        <h3 className="text-lg md:text-xl text-muted-foreground italic tracking-tight">
                             Aucune salle pour le moment
                         </h3>
                     </div>

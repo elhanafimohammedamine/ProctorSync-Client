@@ -28,7 +28,7 @@ export default function CreateRoomFrom() {
     return(
         <Form {... editRoomForm}>
             <form onSubmit={editRoomForm.handleSubmit(onSubmit)} className="space-y-6">
-                <div className="p-4 grid gap-y-4">
+                <div className="grid gap-y-4">
                     <FormField
                         control={editRoomForm.control}
                         name="roomName"
@@ -49,7 +49,7 @@ export default function CreateRoomFrom() {
                             <FormItem className="md:col-start-1">
                                 <FormLabel>Capacité de la salle</FormLabel>
                                 <FormControl>
-                                    <Input type="number" {...field} />
+                                    <Input min={1} type="number" {...field} />
                                 </FormControl>
                                 <FormMessage/>
                             </FormItem>

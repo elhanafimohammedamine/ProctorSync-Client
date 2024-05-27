@@ -28,7 +28,7 @@ export default function EditRoomFrom() {
     return(
         <Form {... editRoomForm}>
             <form onSubmit={editRoomForm.handleSubmit(onSubmit)} className="space-y-6">
-                <div className="p-4 grid gap-y-4">
+                <div className="grid gap-y-4">
                     <FormField
                         control={editRoomForm.control}
                         name="roomName"
