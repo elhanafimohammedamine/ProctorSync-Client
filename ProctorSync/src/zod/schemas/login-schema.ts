@@ -1,9 +1,9 @@
 import {z} from "zod";
 export const loginFormSchema = z.object({
     email: z.string({
-        required_error: "Email address is required.",
-    }).email({message: "invalid email address"}),
+        required_error: "Adress email est requise",
+    }).email({message: "Adress email est invalide"}),
     password: z.string({
-        required_error: "Password is required",
+        required_error: "Mot de passe est requis",
     })
 })
