@@ -25,7 +25,7 @@ export function Footer() {
           </div>
           <section className="text-center">
             <h3>
-              &copy; 2024 ProctorSync {""}
+              &copy; 2024 ProctorSync made with {""}
               <span className="relative top-[-2px]">
             <HeartFilledIcon className="w-4 h-4 text-red-500 inline-block"/>
           </span>

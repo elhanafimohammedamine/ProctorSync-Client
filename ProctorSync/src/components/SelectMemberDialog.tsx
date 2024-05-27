@@ -28,9 +28,9 @@ interface SelectPatientDialogProps {
 export default function SelectMemberDialog({trigger}: SelectPatientDialogProps) {
 
 	const [selectedUsers, setSelectedUsers] = useState<IUser[]>([])
-	const [filteredPatients, setFilteredPatients] = useState(users);
+	const [filteredUsers, setFilteredUsers] = useState(users);
 	const handleModalSearchInputChange = (query: string) => {
-		setFilteredPatients(users
+		setFilteredUsers(users
 			.filter((user) =>
 				user.firstName.toLowerCase().includes(query.toLowerCase()) ||
 				user.lastName.toLowerCase().includes(query.toLowerCase())
@@ -63,7 +63,7 @@ export default function SelectMemberDialog({trigger}: SelectPatientDialogProps) 
 								}
 							}}
 						>
-							{filteredPatients.map((user) => (
+							{filteredUsers.map((user) => (
 								<ToggleGroupItem
 									variant="outline"
 									className="w-full h-full"
