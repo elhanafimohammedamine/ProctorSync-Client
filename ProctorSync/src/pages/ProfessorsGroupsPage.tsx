@@ -26,13 +26,15 @@ export default function ProfessorsGroupsPage() {
 					<CardTitle className="text-2xl md:text-3xl">Gérer les Groupes</CardTitle>
 					<CardDescription className="text-sm md:text-lg">Suivre et gérer tous les groupes sur la plateforme</CardDescription>
 				</CardHeader>
-				<Button onClick={toggleDialog}>
-					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
-						<path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
-					</svg>
-					<span>Ajouter Groupe</span>
-				</Button>
-				<CreateGroupDialog isOpen={isDialogOpen} toggleOpen={toggleDialog}/>
+				<div className="px-4 md:px-6 w-full md:w-fit">
+					<Button onClick={toggleDialog} className="w-full md:w-fit">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
+							<path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+						</svg>
+						<span>Ajouter Groupe</span>
+					</Button>
+					<CreateGroupDialog isOpen={isDialogOpen} toggleOpen={toggleDialog}/>
+				</div>
 			</div>
 			<CardContent className="p-4 md:p-6 space-y-6 md:space-y-12">
 				<div className="relative flex-1 md:grow-0">

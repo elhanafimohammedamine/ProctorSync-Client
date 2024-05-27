@@ -28,7 +28,7 @@ export default function ClassRoomsPage() {
                         plateforme</CardDescription>
                 </CardHeader>
                 <div className="px-4 md:px-6 w-full md:w-fit">
-                    <Button onClick={toggleDialog}>
+                    <Button onClick={toggleDialog} className="w-full md:w-fit">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                              strokeWidth={1.5}
                              stroke="currentColor" className="size-5">

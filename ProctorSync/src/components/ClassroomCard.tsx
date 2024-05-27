@@ -4,6 +4,7 @@ import EditRoomDialog from "@/components/EditRoomDialog.tsx";
 import DeleteEntityDialog from "@/components/DeleteEntityDialog.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {useState} from "react";
+import ClassIcon from "@/assets/images/class1.svg"
 
 
 export default function ClassroomCard() {
@@ -13,10 +14,10 @@ export default function ClassroomCard() {
 	const toggleEditDialog = () => setEditOpen(!isEditOpen)
 
 
-	return <Card className="rounded-xl">
+	return <Card className="rounded-xl bg-card">
 		<CardHeader className="p-0">
-			<div className="h-44 bg-green-500 rounded-t-xl">
-
+			<div className="h-44 flex justify-center items-center bg-blue-400 rounded-t-xl">
+				<img className="h-28 w-28 object-cover" src={ClassIcon} alt="icon"/>
 			</div>
 		</CardHeader>
 		<CardContent>

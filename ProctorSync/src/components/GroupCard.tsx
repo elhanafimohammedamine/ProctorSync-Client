@@ -10,7 +10,7 @@ export default function GroupCard() {
 	const [isDeleteOpen, setDeleteOpen] = useState(false);
 	const toggleDeleteDialog = () => setDeleteOpen(!isDeleteOpen)
 
-	return <Card className="rounded-xl">
+	return <Card className="rounded-xl bg-card">
 		<CardHeader className="p-0">
 			<div className="h-44 bg-red-600 rounded-t-xl">
 
