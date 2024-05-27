@@ -3,25 +3,16 @@ import {Search} from "lucide-react";
 import {Input} from "@/components/ui/input.tsx";
 import {useState} from "react";
 import Paginator from "@/components/Paginator.tsx";
-import RoomCard from "@/components/RoomCard.tsx";
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger
-} from "@/components/ui/dialog.tsx";
-import CreateRoomFrom from "@/components/CreateRoomFrom.tsx";
-import {cn} from "@/lib/utils.ts";
-import {buttonStyle} from "@/assets/style/CustomStyles.ts";
 import ClassroomCard from "@/components/ClassroomCard.tsx";
+import CreateRoomDialog from "@/components/CreateRoomDialog.tsx";
+import {Button} from "@/components/ui/button.tsx";
 
 export default function ClassRoomsPage() {
     const [currentPage, setCurrentPage] = useState<number>(1);
-
     // @ts-ignore
     const [totalPages, setTotalPages] = useState<number>(1);
+    const [isOpen, setOpen] = useState(false);
+    const toggleDialog = () => setOpen(!isOpen)
 
     const handlePageChange = (currentPage : number) => {
         setCurrentPage(currentPage);
@@ -30,34 +21,24 @@ export default function ClassRoomsPage() {
 
     return(
         <Card className="bg-transparent border-0 shadow-none">
-                <div className="flex flex-col md:flex-row justify-between md:items-center">
-                    <CardHeader className="px-4 md:px-6">
-                        <CardTitle className="text-2xl md:text-3xl">Gérer les salles</CardTitle>
-                        <CardDescription className="text-sm md:text-lg">Suivre et gérer tous les salles sur la plateforme</CardDescription>
-                    </CardHeader>
-                        <Dialog>
-                            <div className="px-4 md:px-6 w-full md:w-fit">
-                                <DialogTrigger className={cn(buttonStyle, "w-full")}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                         strokeWidth={1.5}
-                                         stroke="currentColor" className="size-5">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
-                                    </svg>
-                                    <span>Ajouter Salle</span>
-                                </DialogTrigger>
-                            </div>
-                            <DialogContent className="max-h-screen max-w-xl">
-                                <DialogHeader>
-                                    <DialogTitle>Créer une salle</DialogTitle>
-                                    <DialogDescription>
-                                        Ajouter les informations nécessaires ici. Cliquez sur Créer lorsque vous avez
-                                        terminé.
-                                    </DialogDescription>
-                                </DialogHeader>
-                                <CreateRoomFrom/>
-                            </DialogContent>
-                        </Dialog>
+            <div className="flex flex-col md:flex-row justify-between md:items-center">
+                <CardHeader className="px-4 md:px-6">
+                    <CardTitle className="text-2xl md:text-3xl">Gérer les salles</CardTitle>
+                    <CardDescription className="text-sm md:text-lg">Suivre et gérer tous les salles sur la
+                        plateforme</CardDescription>
+                </CardHeader>
+                <div className="px-4 md:px-6 w-full md:w-fit">
+                    <Button onClick={toggleDialog} className="w-full md:w-fit">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                             strokeWidth={1.5}
+                             stroke="currentColor" className="size-5">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+                        </svg>
+                        <span>Ajouter Salle</span>
+                    </Button>
                 </div>
+                <CreateRoomDialog isOpen={isOpen} toggleOpen={toggleDialog}/>
+            </div>
             <CardContent className="p-4 md:p-6 space-y-6 md:space-y-12">
             <div className="relative flex-1 md:grow-0">
                     <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground"/>

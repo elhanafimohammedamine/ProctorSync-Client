@@ -47,7 +47,7 @@ export default function CreateNewUserForm() {
 									<FormControl>
 										<Input className="bg-muted/10" type="text"  {...field}/>
 									</FormControl>
-									<FormMessage className="text-xs font-normal" />
+									<FormMessage />
 								</FormItem>
 							)}
 						/>
@@ -60,7 +60,7 @@ export default function CreateNewUserForm() {
 									<FormControl>
 										<Input className="bg-muted/10" type="text"  {...field}/>
 									</FormControl>
-									<FormMessage className="text-xs font-normal" />
+									<FormMessage />
 								</FormItem>
 							)}
 						/>
@@ -74,7 +74,7 @@ export default function CreateNewUserForm() {
 								<FormControl>
 									<Input className="bg-muted/10" type="text"  {...field}/>
 								</FormControl>
-								<FormMessage className="text-xs font-normal" />
+								<FormMessage />
 							</FormItem>
 						)}
 					/>
@@ -87,7 +87,7 @@ export default function CreateNewUserForm() {
 								<FormControl>
 									<Input className="bg-muted/10" type="text"  {...field}/>
 								</FormControl>
-								<FormMessage className="text-xs font-normal" />
+								<FormMessage />
 							</FormItem>
 						)}
 					/>
@@ -113,7 +113,7 @@ export default function CreateNewUserForm() {
 										</SelectContent>
 									</Select>
 								</FormControl>
-								<FormMessage className="text-xs font-normal" />
+								<FormMessage />
 							</FormItem>
 						)}
 					/>

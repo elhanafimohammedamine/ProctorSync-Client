@@ -91,12 +91,12 @@ export default function GroupMembersPage() {
 						Nouveau membre</div>
 				} />
 			</div>
-			<ul role="list" className="divide-y divide-gray-100 space-y-2">
+			<ul role="list" className="space-y-2">
 				{people.map((person) => (
-					<li key={person.email} className="flex justify-between items-center bg-white rounded-xl px-6 gap-x-6 py-3">
-						<div className="flex min-w-0 gap-x-4">
-							<Avatar>
-								<AvatarFallback>CN</AvatarFallback>
+					<li key={person.email} className="flex justify-between items-center bg-card rounded-xl px-6 gap-x-6 py-3">
+						<div className="flex justify-center items-center min-w-0 gap-x-4">
+							<Avatar className="rounded-lg">
+								<AvatarFallback className="rounded-lg bg-gray-200 dark:bg-muted-foreground/15 font-medium">CN</AvatarFallback>
 							</Avatar>
 							<div className="min-w-0 flex-auto">
 								<p className="text-sm font-semibold leading-6 ">{person.name}</p>
@@ -106,7 +106,7 @@ export default function GroupMembersPage() {
 						</div>
 						<div className="flex items-center flex-row space-x-5">
 							<div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-								<p className="text-sm leading-6 text-gray-900">Enseignant</p>
+								<p className="text-sm leading-6 dark:text-gray-100 text-gray-900">Enseignant</p>
 							</div>
 							<DropdownMenu>
 								<DropdownMenuTrigger>
@@ -121,7 +121,7 @@ export default function GroupMembersPage() {
 									</DropdownMenuItem>
 								</DropdownMenuContent>
 							</DropdownMenu>
-							<OutMemberConfirmationDialog isOpen={isOpen} toggleOpen={toggleDialog} />
+							<OutMemberConfirmationDialog isOpen={isOpen} toggleOpen={toggleDialog}/>
 						</div>
 					</li>
 				))}
