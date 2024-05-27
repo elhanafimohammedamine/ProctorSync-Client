@@ -6,9 +6,13 @@ import ClassRoomsPage from "@/pages/ClassRoomsPage.tsx";
 import ProfessorsPage from "@/pages/ProfessorsPage.tsx";
 import ProfessorsGroupsPage from "@/pages/ProfessorsGroupsPage.tsx";
 import GroupMembersPage from "@/pages/GroupMembersPage.tsx";
+import LoginPage from "@/pages/LoginPage.tsx";
 
 
 export const router = createBrowserRouter([
+    {
+        path: "/login",
+        element: <LoginPage/>},
     {
         path: "/",
         element: <App />,
