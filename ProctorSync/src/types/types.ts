@@ -1,6 +1,5 @@
 
 
-
 export interface IUser {
 	id: string;
 	firstName: string;
@@ -9,3 +8,21 @@ export interface IUser {
 	phone: string;
 	role: string;
 }
+
+
+export interface IAuthRequest {
+	email: string;
+	password: string;
+}
+
+
+
+
+
+
+
+
+
+
+
+

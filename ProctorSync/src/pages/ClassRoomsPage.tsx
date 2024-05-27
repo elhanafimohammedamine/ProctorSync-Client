@@ -3,6 +3,8 @@ import {Search} from "lucide-react";
 import {Input} from "@/components/ui/input.tsx";
 import {useState} from "react";
 import Paginator from "@/components/Paginator.tsx";
+
+
 import ClassroomCard from "@/components/ClassroomCard.tsx";
 import CreateRoomDialog from "@/components/CreateRoomDialog.tsx";
 import {Button} from "@/components/ui/button.tsx";
@@ -61,8 +63,7 @@ export default function ClassRoomsPage() {
                     />
                 </div>
                 <div
-                    className="min-h-96 flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
-                    x-chunk="dashboard-02-chunk-1">
+                    className="min-h-96 flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm" x-chunk="dashboard-02-chunk-1">
                     <div className="flex flex-col items-center gap-1 text-center">
                         <h3 className="text-lg md:text-xl text-muted-foreground italic tracking-tight">
                             Aucune salle pour le moment

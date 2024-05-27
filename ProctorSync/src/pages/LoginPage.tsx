@@ -10,6 +10,7 @@ import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, Form
 import {PasswordInput} from "@/components/PasswordInput.tsx";
 import LogoDarkImage from "@/assets/images/proctorsyncTypoDark.svg"
 import LogoLightImage from "@/assets/images/proctorsyncTypoLight.svg"
+import {useAuth} from "@/hooks/useAuth.ts";
 
 
 export default function LoginPage() {
@@ -20,9 +21,15 @@ export default function LoginPage() {
     }
   })
 
+	const {login} = useAuth()
 
-    const handleLogin = (values: z.infer<typeof loginFormSchema>) => {
-        console.log(values);
+    const handleLogin = async (values: z.infer<typeof loginFormSchema>) => {
+        const {email, password} = values;
+		await login({email, password})
+			.then(() => {
+
+			})
+
     }
   return (
     <div className="w-full h-screen content-center md:content-stretch lg:grid lg:grid-cols-2">
@@ -38,7 +45,7 @@ export default function LoginPage() {
             </div>
             <h1 className="text-3xl font-bold">Welcome Back</h1>
             <p className="text-balance text-muted-foreground">
-              Enter your email below to login to your account
+              Veuillez entrer vos informations de connexion pour continuer
             </p>
           </div>
           <Form {...loginForm}>
@@ -51,9 +58,9 @@ export default function LoginPage() {
                           <FormItem>
                             <FormLabel>Email</FormLabel>
                             <FormControl>
-                              <Input type="email" placeholder="m@example.com" {...field} />
+                              <Input type="email" placeholder="m@exemple.com" {...field} />
                             </FormControl>
-                            <FormMessage />
+                            <FormMessage className="text-xs" />
                           </FormItem>
                       )}
                   />
@@ -62,11 +69,11 @@ export default function LoginPage() {
                       name="password"
                       render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Mot de Passe</FormLabel>
+                            <FormLabel>Mot de passe</FormLabel>
                             <FormControl>
                                 <PasswordInput {...field}/>
                             </FormControl>
-                            <FormMessage />
+                              <FormMessage className="text-xs" />
                             <FormDescription>
                               <Link to="/forgot-password" className="ml-auto inline-block text-sm underline">
                                   Mot de passe oublié?
@@ -75,7 +82,7 @@ export default function LoginPage() {
                           </FormItem>
                       )}
                   />
-                  <Button type="submit" className="w-full">Se Connecter</Button>
+                  <Button type="submit" className="w-full">Se connecter</Button>
           </div>
         </form>
       </Form>
