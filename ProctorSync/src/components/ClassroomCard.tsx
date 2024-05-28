@@ -37,27 +37,17 @@ export default function ClassroomCard() {
 				</div>
 			</div>
 		</CardContent>
-		<CardFooter className="p-0 mt-auto flex border-t border-border divide-x divide-gray-200 dark:divide-border">
-			<Button onClick={toggleEditDialog} className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-xs font-medium rounded-es-xl text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none bg-card border-border dark:text-white dark:hover:bg-muted/20">
-				<SquarePen className="size-4"/>
+		<CardFooter className="p-0 mt-auto flex border-t text-primary border-border divide-x divide-gray-200 dark:divide-border">
+			<Button onClick={toggleEditDialog} className="w-full text-primary dark:text-primary py-3 px-4 inline-flex justify-center items-center gap-x-2 text-xs font-medium rounded-es-xl  shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none bg-card border-border dark:hover:bg-muted/20">
+				<SquarePen className="size-4 "/>
 				Modifier
 			</Button>
-			<Button onClick={toggleDeleteDialog} className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-xs font-medium rounded-none rounded-ee-xl text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none bg-card border-border dark:text-white dark:hover:bg-muted/20">
+			<Button onClick={toggleDeleteDialog} className="w-full text-red-600 dark:text-red-600 py-3 px-4 inline-flex justify-center items-center gap-x-2 text-xs font-medium rounded-none rounded-ee-xl  shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none bg-card border-border dark:hover:bg-muted/20">
 				<Trash2 className="size-4"/>
 				Supprimer
 			</Button>
 			<EditRoomDialog isOpen={isEditOpen} toggleOpen={toggleEditDialog}/>
 			<DeleteEntityDialog entityName="salle" isOpen={isDeleteOpen} toggleOpen={toggleDeleteDialog}/>
-		</CardFooter>
-		<CardFooter className="p-0 mt-auto flex border-t border-gray-200 divide-x divide-gray-200 dark:border-neutral-700 dark:divide-neutral-700">
-			<button className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-xs font-medium rounded-es-xl bg-white text-red-600 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800">
-				<Trash2 className="size-4" />
-				Supprimer
-			</button>
-			<button className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-xs font-medium rounded-ee-xl bg-white text-primary shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800">
-				<SquarePen className="size-4" />
-				Modidier
-			</button>
 		</CardFooter>
 	</Card>
 }

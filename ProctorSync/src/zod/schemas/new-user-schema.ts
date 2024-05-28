@@ -33,7 +33,8 @@ export const newUserSchema = z.object({
 		.regex(new RegExp('^\\+?\\d{1,3}\\d{1,9}$'), {message: 'Le numéro de téléphone est invalid.'}),
 
 	role: z.enum(["administrator", "teacher"]),
-
+	branchId: z.string().nullable(),
+	departmentId: z.string().nullable(),
 });
 
 

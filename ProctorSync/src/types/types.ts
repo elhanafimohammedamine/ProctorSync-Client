@@ -15,9 +15,22 @@ export interface IAuthRequest {
 	password: string;
 }
 
+export interface IProfessorRequest {
+	firstName: string;
+	lastName: string;
+	email: string;
+	phone: string;
+	branchId: string;
+	departmentId: string;
+}
 
 
-
+export interface IAdministratorRequest {
+	firstName: string;
+	lastName: string;
+	email: string;
+	phone: string;
+}
 
 
 
