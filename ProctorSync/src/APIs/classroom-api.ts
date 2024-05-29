@@ -1,4 +1,4 @@
-import {IClassroomRequest} from "@/types/types.ts";
+import {IClassroomRequest, IClassroomUpdateRequest} from "@/types/types.ts";
 import axiosInstance from "@/http/axios.ts";
 
 
@@ -9,6 +9,14 @@ export default {
 	},
 	getClassrooms: async () => {
 		const response = await axiosInstance.get("/classroom");
+		return response.data;
+	},
+	updateClassroom: async (id:string, classroom: IClassroomUpdateRequest) => {
+		const response = await axiosInstance.put(`/classroom/update/${id}`, classroom);
+		return response.data;
+	},
+	deleteClassroom: async (id: string) => {
+		const response = await axiosInstance.delete(`/classroom/delete/${id}`);
 		return response.data;
 	}
 }

@@ -9,8 +9,9 @@ import ClassroomCard from "@/components/ClassroomCard.tsx";
 import CreateRoomDialog from "@/components/CreateRoomDialog.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {useClassroom} from "@/hooks/use-classroom.ts";
+import {Loader} from "@/components/Loader.tsx";
 
-export default function ClassRoomsPage() {
+export default function ClassroomsPage() {
     const [currentPage, setCurrentPage] = useState<number>(1);
     // @ts-ignore
     const [totalPages, setTotalPages] = useState<number>(1);
@@ -21,7 +22,9 @@ export default function ClassRoomsPage() {
         setCurrentPage(currentPage);
     };
 
-    const {classrooms} = useClassroom();
+    const {classrooms, classroomsAreLoading} = useClassroom();
+
+    if (classroomsAreLoading) return <Loader />;
 
     return(
         <Card className="bg-transparent border-0 shadow-none">
@@ -63,14 +66,16 @@ export default function ClassRoomsPage() {
                         showPreviousNext
                     />
                 </div>
-                <div
-                    className="min-h-96 flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm" x-chunk="dashboard-02-chunk-1">
-                    <div className="flex flex-col items-center gap-1 text-center">
-                        <h3 className="text-lg md:text-xl text-muted-foreground italic tracking-tight">
-                            Aucune salle pour le moment
-                        </h3>
+                {classrooms?.length === 0 && (
+                    <div
+                        className="min-h-96 flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm" x-chunk="dashboard-02-chunk-1">
+                        <div className="flex flex-col items-center gap-1 text-center">
+                            <h3 className=" text-muted-foreground font-light italic tracking-tight">
+                                Aucune salle pour le moment
+                            </h3>
+                        </div>
                     </div>
-                </div>
+                )}
             </CardContent>
         </Card>
     )

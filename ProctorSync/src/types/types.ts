@@ -89,3 +89,46 @@ export interface IClassroomResponse {
 	bloc: string;
 	capacity: number;
 }
+
+export interface IClassroomUpdateRequest {
+	id: string;
+	name : string;
+	bloc: string;
+	capacity: number;
+}
+
+export interface IElementType {
+	id: string;
+	typeTitle: string;
+}
+
+export interface ILevel {
+	id: string;
+	levelTitle: string;
+}
+
+export interface IPedagogicElementRequest {
+	elementTitle: string;
+	elementTypeId: string;
+	levelId: string;
+	professorId: string;
+	coordinatorId: string;
+}
+
+export interface IPedagogicElementUpdateRequest {
+	id: string;
+	elementTitle: string;
+	elementTypeId: string;
+	levelId: string;
+	professorId: string;
+	coordinatorId: string;
+}
+
+export interface IPedagogicElementResponse {
+	id: string;
+	elementTitle: string;
+	level: ILevel;
+	elementType: IElementType;
+	professor: IProfessorResponse;
+	coordinator: IProfessorResponse;
+}

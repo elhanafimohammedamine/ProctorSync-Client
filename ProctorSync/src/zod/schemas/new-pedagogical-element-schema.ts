@@ -1,9 +1,9 @@
 import {z} from "zod";
 
 
-export const newPedagogicalElementSchema = z.object({
+export const pedagogicalElementSchema = z.object({
 
-	title: z.string({
+	elementTitle: z.string({
 		required_error: "Le titre est requis.",
 		invalid_type_error: "Le titre doit être une chaîne de caractères.",
 	})
@@ -25,10 +25,12 @@ export const newPedagogicalElementSchema = z.object({
 		required_error: "Le niveau est requis.",
 	}),
 
-	type: z.enum(["module", "element"]),
+	elementTypeId: z.string({
+		required_error: "Le type d'élément est requis.",
+	}),
 
 
 });
 
 
-export type NewPedagogicalElementSchema = z.infer<typeof newPedagogicalElementSchema>;
+export type PedagogicalElementSchema = z.infer<typeof pedagogicalElementSchema>;

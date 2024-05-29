@@ -1,5 +1,5 @@
 import {Card, CardContent, CardFooter, CardHeader} from "@/components/ui/card.tsx";
-import DeleteEntityDialog from "@/components/DeleteEntityDialog.tsx";
+import DeleteEntityDialog from "@/components/DeleteClassroomConfirmationDialog.tsx";
 import {Trash2} from "lucide-react";
 import {useState} from "react";
 import {IGroupResponse} from "@/types/types.ts";

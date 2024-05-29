@@ -14,16 +14,45 @@ import {useForm} from "react-hook-form";
 import {z} from "zod";
 import {classroomSchema} from "@/zod/schemas/classroom-schema.ts";
 import {zodResolver} from "@hookform/resolvers/zod";
+import {IClassroomResponse} from "@/types/types.ts";
+import {useClassroom} from "@/hooks/use-classroom.ts";
+import {toast} from "@/components/ui/use-toast.ts";
 
-export default function EditRoomFrom() {
-    const blocs : string[] = [
-        "Bloc A", "Bloc B", "Amphi"
-    ];
+interface Props {
+    classroom: IClassroomResponse;
+}
+
+const blocs : string[] = [
+    "Bloc A", "Bloc B", "Amphi"
+];
+
+export default function EditClassroomFrom({classroom}: Props) {
+
+
+    const {updateClassroom} = useClassroom(classroom?.id);
+
+
     const editRoomForm = useForm<z.infer<typeof classroomSchema>>({
         resolver: zodResolver(classroomSchema),
+        defaultValues: {
+            roomName: classroom?.name,
+            capacity: classroom?.capacity,
+            blocName: classroom?.bloc
+        }
     })
-    function onSubmit(values: z.infer<typeof classroomSchema>) {
-        console.log(values);
+    async function onSubmit(values: z.infer<typeof classroomSchema>) {
+        await updateClassroom({
+            id: classroom?.id,
+            name: values.roomName,
+            capacity: values.capacity,
+            bloc: values.blocName
+
+        }).then((response) => {
+            toast({
+                description: response
+            })
+        })
+
     }
     return(
         <Form {... editRoomForm}>

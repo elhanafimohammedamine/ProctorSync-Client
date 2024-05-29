@@ -1,7 +1,7 @@
 import {Card, CardContent, CardFooter, CardHeader} from "@/components/ui/card.tsx";
 import {Building2, SquarePen, Trash2, UsersRound} from "lucide-react";
-import EditRoomDialog from "@/components/EditRoomDialog.tsx";
-import DeleteEntityDialog from "@/components/DeleteEntityDialog.tsx";
+import EditClassroomDialog from "@/components/EditClassroomDialog.tsx";
+import DeleteClassroomConfirmationDialog from "@/components/DeleteClassroomConfirmationDialog.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {useState} from "react";
 import ClassIcon from "@/assets/images/class1.svg"
@@ -52,8 +52,8 @@ export default function ClassroomCard({classroom}: IClassroomCardProps) {
 				<Trash2 className="size-4"/>
 				Supprimer
 			</Button>
-			<EditRoomDialog isOpen={isEditOpen} toggleOpen={toggleEditDialog}/>
-			<DeleteEntityDialog entityName="salle" isOpen={isDeleteOpen} toggleOpen={toggleDeleteDialog}/>
+			<EditClassroomDialog classroom={classroom} isOpen={isEditOpen} toggleOpen={toggleEditDialog}/>
+			<DeleteClassroomConfirmationDialog classroomId={classroom?.id} isOpen={isDeleteOpen} toggleOpen={toggleDeleteDialog}/>
 		</CardFooter>
 	</Card>
 }

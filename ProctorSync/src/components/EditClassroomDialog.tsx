@@ -5,12 +5,14 @@ import {
     DialogHeader,
     DialogTitle
 } from "@/components/ui/dialog.tsx";
-import EditRoomFrom from "@/components/EditRoomFrom.tsx";
+import EditClassroomFrom from "@/components/EditClassroomFrom.tsx";
+import {IClassroomResponse} from "@/types/types.ts";
 interface EditDialogProps {
     isOpen: boolean;
     toggleOpen: () => void;
+    classroom: IClassroomResponse;
 }
-export default function EditRoomDialog({isOpen, toggleOpen}: EditDialogProps) {
+export default function EditClassroomDialog({isOpen, toggleOpen, classroom}: EditDialogProps) {
     return (
         <Dialog open={isOpen} onOpenChange={toggleOpen}>
             <DialogContent className="max-h-screen max-w-xl">
@@ -20,7 +22,7 @@ export default function EditRoomDialog({isOpen, toggleOpen}: EditDialogProps) {
                         Modifier les informations nécessaires ici. Cliquez sur sauvegarder lorsque vous avez terminé.
                     </DialogDescription>
                 </DialogHeader>
-                <EditRoomFrom/>
+                <EditClassroomFrom classroom={classroom}/>
             </DialogContent>
         </Dialog>
     )

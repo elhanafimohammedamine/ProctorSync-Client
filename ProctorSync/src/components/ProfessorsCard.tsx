@@ -16,8 +16,9 @@ import CreateNewProfessorDialog from "@/components/CreateNewProfessorDialog.tsx"
 import {Avatar, AvatarFallback} from "@/components/ui/avatar.tsx";
 import {useProfessor} from "@/hooks/use-professor.ts";
 import {format} from "date-fns";
+import {Loader} from "@/components/Loader.tsx";
 
-export default function ProfessorsPage() {
+export default function ProfessorsCard() {
     const [currentPage, setCurrentPage] = useState<number>(1);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -29,11 +30,9 @@ export default function ProfessorsPage() {
     };
 
 
-    const {professors} = useProfessor();
+    const {professors, professorsAreLoading} = useProfessor()
 
-
-
-
+    if(professorsAreLoading) return <Loader />;
     return(
         <Card className="bg-card border-0" x-chunk="dashboard-06-chunk-0">
             <CardHeader className="px-4 md:px-6 flex flex-row items-center justify-between">

@@ -16,8 +16,9 @@ import {Avatar, AvatarFallback} from "@/components/ui/avatar.tsx";
 import {format} from "date-fns";
 import {useAdministrator} from "@/hooks/use-administrator.ts";
 import CreateNewAdministratorDialog from "@/components/CreateNewAdministratorDialog.tsx";
+import {Loader} from "@/components/Loader.tsx";
 
-export default function AdministratorsPage() {
+export default function AdministratorsCard() {
 	const [currentPage, setCurrentPage] = useState<number>(1);
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -29,10 +30,10 @@ export default function AdministratorsPage() {
 	};
 
 
-	const {administrators} = useAdministrator();
+	const {administrators, administratorsAreLoading} = useAdministrator();
 
 
-
+	if (administratorsAreLoading) return <Loader />;
 
 	return(
 		<Card className="bg-card border-0" x-chunk="dashboard-06-chunk-0">

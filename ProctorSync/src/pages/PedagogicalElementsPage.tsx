@@ -1,0 +1,135 @@
+import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card.tsx";
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table.tsx";
+import {
+	DropdownMenu,
+	DropdownMenuContent, DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu.tsx";
+import {Button} from "@/components/ui/button.tsx";
+import {Badge} from "@/components/ui/badge.tsx";
+import {MoreHorizontal, Search, SquarePen, Trash2} from "lucide-react";
+import {ScrollArea, ScrollBar} from "@/components/ui/scroll-area.tsx";
+import Paginator from "@/components/Paginator.tsx";
+import {Input} from "@/components/ui/input.tsx";
+import {useState} from "react";
+import CreateNewPedagogicalElementDialog from "@/components/CreateNewPedagogicalElementDialog.tsx";
+import {usePedagogicElement} from "@/hooks/use-pedagogic-element.ts";
+import EditPedagogicalElementDialog from "@/components/EditPedagogicalElementDialog";
+
+export default function PedagogicalElementsPage() {
+	const [currentPage, setCurrentPage] = useState<number>(1);
+
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	// @ts-ignore
+	const [totalPages, setTotalPages] = useState<number>(1);
+
+	const handlePageChange = (currentPage : number) => {
+		setCurrentPage(currentPage);
+	};
+
+	const {pedagogicElements} = usePedagogicElement();
+
+
+	const [isOpened, setIsOpen] = useState(false);
+	const toggleDialog = () => setIsOpen(!isOpened);
+
+	return(
+		<Card className="bg-card border-0" x-chunk="dashboard-06-chunk-0">
+			<CardHeader className="p-4 md:p-6 flex flex-row items-center justify-between">
+				<div>
+					<CardTitle className="text-2xl md:text-3xl">Les élements enseignés</CardTitle>
+					<CardDescription className="text-sm md:text-lg">
+						Gérer le éléments pédagogiques enseignés à l'école nationale des science appliquées d'Al Hoceima.
+					</CardDescription>
+				</div>
+				<CreateNewPedagogicalElementDialog />
+			</CardHeader>
+			<CardContent className="p-4 md:p-6 overflow-hidden space-y-6 md:space-y-8">
+				<div className="relative flex-1 md:grow-0">
+					<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground"/>
+					<Input
+						type="search"
+						placeholder="Search..."
+						className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
+					/>
+				</div>
+				<ScrollArea className="w-full whitespace-nowrap rounded-md">
+					<Table>
+						<TableHeader>
+							<TableRow className="bg-primary/10 hover:bg-primary/15 dark:bg-muted/30 dark:hover:bg-muted/30">
+								<TableHead>Titre</TableHead>
+								<TableHead>Enseignant</TableHead>
+								<TableHead>Coordinateur</TableHead>
+								<TableHead>Niveau</TableHead>
+								<TableHead>Type</TableHead>
+								<TableHead>Actions</TableHead>
+							</TableRow>
+						</TableHeader>
+						<TableBody>
+							{pedagogicElements?.length === 0 && (
+								<TableRow className="bg-primary/5 dark:bg-muted/20 hover:bg-primary/10 dark:hover:bg-muted/10">
+									<TableCell colSpan={7} className="w-full text-center text-sm italic text-muted-foreground">
+										Aucun élément trouvé
+									</TableCell>
+								</TableRow>
+							)}
+							{pedagogicElements?.map((pedagogicElement) => (
+								<TableRow key={pedagogicElement?.id} className="bg-primary/5 dark:bg-muted/20 hover:bg-primary/10 dark:hover:bg-muted/10">
+									<TableCell>{pedagogicElement?.elementTitle}</TableCell>
+									<TableCell className="font-medium">
+										{pedagogicElement?.professor?.firstName?.charAt(0).toUpperCase() + pedagogicElement?.professor?.firstName?.slice(1)} {pedagogicElement?.professor?.lastName?.charAt(0).toUpperCase() + pedagogicElement?.professor?.lastName?.slice(1)}
+									</TableCell>
+									<TableCell className="font-medium">
+										{pedagogicElement?.coordinator?.firstName?.charAt(0).toUpperCase() + pedagogicElement?.coordinator?.firstName?.slice(1)} {pedagogicElement?.coordinator?.lastName?.charAt(0).toUpperCase() + pedagogicElement?.coordinator?.lastName?.slice(1)}
+									</TableCell>
+									<TableCell className="font-medium">{pedagogicElement?.level?.levelTitle}</TableCell>
+									<TableCell><Badge>{pedagogicElement?.elementType?.typeTitle}</Badge></TableCell>
+									<TableCell>
+										<DropdownMenu>
+											<DropdownMenuTrigger asChild>
+												<Button
+													aria-haspopup="true"
+													size="icon"
+													variant="ghost"
+												>
+													<MoreHorizontal className="h-4 w-4"/>
+													<span className="sr-only">Toggle menu</span>
+												</Button>
+											</DropdownMenuTrigger>
+											<DropdownMenuContent align="end">
+												<DropdownMenuLabel>Actions</DropdownMenuLabel>
+												<DropdownMenuItem className="flex items-center gap-x-1.5" onClick={toggleDialog}>
+													<SquarePen className="h-4 w-4"/>
+													Modifier
+												</DropdownMenuItem>
+												<DropdownMenuItem className="text-red-600 flex items-center gap-x-1.5">
+													<Trash2 className="h-4 w-4"/>
+													Supprimer
+												</DropdownMenuItem>
+											</DropdownMenuContent>
+										</DropdownMenu>
+										<EditPedagogicalElementDialog isOpen={isOpened} toggleDialog={toggleDialog} pedagogicalElement={pedagogicElement} />
+									</TableCell>
+								</TableRow>
+							))}
+
+
+						</TableBody>
+					</Table>
+					<ScrollBar orientation="horizontal"/>
+				</ScrollArea>
+				<div className="flex justify-start">
+					<Paginator
+						currentPage={currentPage}
+						totalPages={totalPages}
+						onPageChange={(pageNumber) => handlePageChange(pageNumber)}
+						showPreviousNext
+					/>
+				</div>
+			</CardContent>
+			<CardFooter>
+			</CardFooter>
+		</Card>
+	)
+}

@@ -1,9 +1,9 @@
 import {useMutation, useQuery, useQueryClient} from "react-query";
-import {IClassroomRequest, IClassroomResponse} from "@/types/types.ts";
+import {IClassroomRequest, IClassroomResponse, IClassroomUpdateRequest} from "@/types/types.ts";
 import ClassroomApi from "@/APIs/classroom-api.ts";
 
 
-export const useClassroom = () => {
+export const useClassroom = (classroomId?: string) => {
 
 	const queryClient = useQueryClient();
 
@@ -17,6 +17,30 @@ export const useClassroom = () => {
 		},
 		onError: (error) => {
 			console.error('Error while creating classroom', error)
+		}
+	});
+
+	const {mutateAsync: updateClassroomMutation, isLoading: updateClassroomIsLoading} = useMutation({
+		mutationKey: "updateClassroom",
+		mutationFn: async (classroom : IClassroomUpdateRequest) => await ClassroomApi.updateClassroom(classroomId!, classroom),
+		onSuccess: async (response) => {
+			await queryClient.invalidateQueries("classrooms");
+			console.log(response)
+		},
+		onError: (error) => {
+			console.error('Error while updating classroom', error)
+		}
+	});
+
+	const {mutateAsync: deleteClassroomMutation, isLoading: deleteClassroomIsLoading} = useMutation({
+		mutationKey: "deleteClassroom",
+		mutationFn: async (classroomId : string) => await ClassroomApi.deleteClassroom(classroomId),
+		onSuccess: async (response) => {
+			await queryClient.invalidateQueries("classrooms");
+			console.log(response)
+		},
+		onError: (error) => {
+			console.error('Error while deleting classroom', error)
 		}
 	});
 
@@ -38,12 +62,17 @@ export const useClassroom = () => {
 
 
 	const createClassroom = async (classroom: IClassroomRequest) => await createClassroomMutation(classroom);
-
+	const updateClassroom = async (classroom: IClassroomUpdateRequest) => await updateClassroomMutation(classroom);
+	const deleteClassroom = async (classroomId: string) => await deleteClassroomMutation(classroomId);
 	return {
 		createClassroom,
 		insertClassroomIsLoading,
 		classrooms,
-		classroomsAreLoading
+		classroomsAreLoading,
+		updateClassroom,
+		updateClassroomIsLoading,
+		deleteClassroom,
+		deleteClassroomIsLoading
 	}
 }
 

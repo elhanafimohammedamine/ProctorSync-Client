@@ -8,6 +8,7 @@ import {useState} from "react";
 import {Button} from "@/components/ui/button.tsx";
 import CreateGroupDialog from "@/components/CreateGroupDialog.tsx";
 import {useGroup} from "@/hooks/use-group.ts";
+import {Loader} from "@/components/Loader.tsx";
 
 
 export default function ProfessorsGroupsPage() {
@@ -21,7 +22,9 @@ export default function ProfessorsGroupsPage() {
 		setCurrentPage(currentPage);
 	};
 
-	const {groups} = useGroup()
+	const {groups, groupsAreLoading} = useGroup()
+
+	if (groupsAreLoading) return <Loader />;
 
 	return(
 		<Card className="bg-transparent border-0 shadow-none">

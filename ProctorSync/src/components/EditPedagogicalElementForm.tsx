@@ -14,23 +14,41 @@ import {useElementType} from "@/hooks/use-element-type.ts";
 import {useProfessor} from "@/hooks/use-professor.ts";
 import {usePedagogicElement} from "@/hooks/use-pedagogic-element.ts";
 import {useToast} from "@/components/ui/use-toast.ts";
+import {IPedagogicElementResponse} from "@/types/types.ts";
+import {Pencil} from "lucide-react";
 
 
-export default function CreateNewPedagogicalElementForm() {
+interface Props {
+	pedagogicalElement: IPedagogicElementResponse
+}
+
+export default function EditPedagogicalElementForm({pedagogicalElement}: Props) {
 	const { toast } = useToast()
 
-	const {createPedagogicElement} =  usePedagogicElement()
+	const {updatePedagogicElement} =  usePedagogicElement(pedagogicalElement?.id)
 
-	const newPedagogicalElementForm
+	const editPedagogicalElementForm
 		= useForm<PedagogicalElementSchema>({
 			resolver: zodResolver(pedagogicalElementSchema),
-
+			defaultValues: {
+				elementTitle: pedagogicalElement?.elementTitle,
+				elementTypeId: pedagogicalElement?.elementType?.id,
+				levelId: pedagogicalElement?.level?.id,
+				professorId: pedagogicalElement?.professor?.id,
+				coordinatorId: pedagogicalElement?.coordinator?.id
+			}
 		})
 
 	const onSubmit = async (data: PedagogicalElementSchema) => {
 
-		await createPedagogicElement({
-			...data
+		await updatePedagogicElement({
+			id: pedagogicalElement?.id,
+			elementTitle: data?.elementTitle,
+			elementTypeId: data?.elementTypeId,
+			levelId: data?.levelId,
+			professorId: data?.professorId,
+			coordinatorId: data?.coordinatorId
+
 		})
 			.then((response) => {
 				toast({
@@ -42,17 +60,19 @@ export default function CreateNewPedagogicalElementForm() {
 
 	}
 
+
+
 	const {levels} = useLevel();
 	const {elementTypes} = useElementType();
 	const {professors} = useProfessor()
 
 
 		return <div>
-			<Form {...newPedagogicalElementForm}>
-				<form onSubmit={newPedagogicalElementForm.handleSubmit(onSubmit)}>
+			<Form {...editPedagogicalElementForm}>
+				<form onSubmit={editPedagogicalElementForm.handleSubmit(onSubmit)}>
 					<div className="grid gap-y-5">
 						<FormField
-							control={newPedagogicalElementForm.control}
+							control={editPedagogicalElementForm.control}
 							name="elementTitle"
 							render={({ field }) => (
 								<FormItem>
@@ -66,14 +86,15 @@ export default function CreateNewPedagogicalElementForm() {
 						/>
 						<div className="grid md:grid-cols-2 gap-5">
 							<FormField
-								control={newPedagogicalElementForm.control}
+								control={editPedagogicalElementForm.control}
 								name="elementTypeId"
 								render={({ field }) => (
 									<FormItem>
 										<FormLabel>Type d'élement</FormLabel>
 										<FormControl>
 											<Select
-												onValueChange={(value) => newPedagogicalElementForm.setValue("elementTypeId", value)}
+												{...field}
+												onValueChange={(value) => editPedagogicalElementForm.setValue("elementTypeId", value)}
 											>
 												<SelectTrigger className={cn(
 													field.value || "text-muted-foreground", "bg-muted/10"
@@ -82,7 +103,7 @@ export default function CreateNewPedagogicalElementForm() {
 													<SelectValue  placeholder="Type"></SelectValue>
 												</SelectTrigger>
 												<SelectContent>
-													{elementTypes?.map((type) => (<SelectItem key={type?.id} value={type?.id}>{type?.typeTitle}</SelectItem>))}
+													{elementTypes?.map((type) => (<SelectItem  key={type?.id} value={type?.id}>{type?.typeTitle}</SelectItem>))}
 												</SelectContent>
 											</Select>
 										</FormControl>
@@ -91,14 +112,15 @@ export default function CreateNewPedagogicalElementForm() {
 								)}
 							/>
 							<FormField
-								control={newPedagogicalElementForm.control}
+								control={editPedagogicalElementForm.control}
 								name="levelId"
 								render={({ field }) => (
 									<FormItem>
 										<FormLabel>Niveau</FormLabel>
 										<FormControl>
 											<Select
-												onValueChange={(value) => newPedagogicalElementForm.setValue("levelId", value)}
+												{...field}
+												onValueChange={(value) => editPedagogicalElementForm.setValue("levelId", value)}
 											>
 												<SelectTrigger className={cn(
 													field.value || "text-muted-foreground", "bg-muted/10"
@@ -117,14 +139,15 @@ export default function CreateNewPedagogicalElementForm() {
 							/>
 						</div>
 						<FormField
-							control={newPedagogicalElementForm.control}
+							control={editPedagogicalElementForm.control}
 							name="professorId"
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>Enseignant</FormLabel>
 									<FormControl>
 										<Select
-											onValueChange={(value) => newPedagogicalElementForm.setValue("professorId", value)}
+											{...field}
+											onValueChange={(value) => editPedagogicalElementForm.setValue("professorId", value)}
 										>
 											<SelectTrigger className={cn(
 												field.value || "text-muted-foreground", "bg-muted/10"
@@ -142,14 +165,15 @@ export default function CreateNewPedagogicalElementForm() {
 							)}
 						/>
 						<FormField
-							control={newPedagogicalElementForm.control}
+							control={editPedagogicalElementForm.control}
 							name="coordinatorId"
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>Coordinateur</FormLabel>
 									<FormControl>
 										<Select
-											onValueChange={(value) => newPedagogicalElementForm.setValue("coordinatorId", value)}
+											{...field}
+											onValueChange={(value) => editPedagogicalElementForm.setValue("coordinatorId", value)}
 										>
 											<SelectTrigger className={cn(
 												field.value || "text-muted-foreground", "bg-muted/10"
@@ -168,10 +192,9 @@ export default function CreateNewPedagogicalElementForm() {
 						/>
 						<div className="grid justify-end">
 							<Button size="sm" type="submit"  className="flex items-center gap-x-1.5">
-								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
-									<path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-								</svg>
-								Créer</Button>
+								<Pencil className="h-4 w-4"/>
+								Modifier
+							</Button>
 						</div>
 					</div>
 				</form>
