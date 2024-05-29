@@ -7,7 +7,11 @@ import ProfessorsPage from "@/pages/ProfessorsPage.tsx";
 import ProfessorsGroupsPage from "@/pages/ProfessorsGroupsPage.tsx";
 import GroupMembersPage from "@/pages/GroupMembersPage.tsx";
 import LoginPage from "@/pages/LoginPage.tsx";
+<<<<<<< Updated upstream
 import AdministratorsPage from "@/pages/administratorsPage.tsx";
+=======
+import ExamSchedulingPage from "@/pages/ExamSchedulingPage.tsx";
+>>>>>>> Stashed changes
 
 
 export const router = createBrowserRouter([
@@ -27,7 +31,8 @@ export const router = createBrowserRouter([
                     {path: "modules", element: <PedagogicalElements/>},
                     {path: "salles", element: <ClassRoomsPage/>},
                     {path: "groupes", element: <ProfessorsGroupsPage/>},
-                    {path: "groupe/membres", element: <GroupMembersPage/>}
+                    {path: "groupe/membres", element: <GroupMembersPage/>},
+                    {path: "test", element: <ExamSchedulingPage/>}
                 ]
             },
         ]

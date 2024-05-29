@@ -13,7 +13,7 @@ const CustomNavLink: React.FC<CustomNavLinkProps> = ({ to, contains, children })
     const isActive = location.pathname.includes(contains);
 
     return (
-        <Link to={to} className={cn(isActive ? "bg-blue-200 dark:bg-accent text-accent-foreground" : "text-muted-foreground", "flex items-center gap-4 py-2 px-2.5 rounded-lg hover:text-accent-foreground hover:bg-blue-200  dark:hover:bg-accent  transition-colors")}>
+        <Link to={to} className={cn(isActive ? "bg-indigo-100 dark:bg-accent text-accent-foreground" : "text-muted-foreground", "flex items-center gap-4 py-2 px-2.5 rounded-lg hover:text-accent-foreground hover:bg-indigo-100  dark:hover:bg-accent  transition-colors")}>
             {children}
         </Link>
     );
