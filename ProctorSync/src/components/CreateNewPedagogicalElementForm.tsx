@@ -1,7 +1,7 @@
 import {
 	newPedagogicalElementSchema,
 	NewPedagogicalElementSchema
-} from "@/zod/schemas/new-pedagogical-element-schema.tsx";
+} from "@/zod/schemas/new-pedagogical-element-schema.ts";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form.tsx";

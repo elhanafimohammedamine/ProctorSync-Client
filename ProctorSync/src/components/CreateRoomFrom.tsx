@@ -12,25 +12,35 @@ import {
 import {Button} from "@/components/ui/button.tsx";
 import {useForm} from "react-hook-form";
 import {z} from "zod";
-import {roomFormSchema} from "@/zod/schemas/room-schema.ts";
 import {zodResolver} from "@hookform/resolvers/zod";
+import {classroomSchema} from "@/zod/schemas/classroom-schema.ts";
+import {useClassroom} from "@/hooks/use-classroom.ts";
 
 export default function CreateRoomFrom() {
-    const blocs : string[] = [
-        "Bloc A", "Bloc B", "Amphi"
-    ];
-    const editRoomForm = useForm<z.infer<typeof roomFormSchema>>({
-        resolver: zodResolver(roomFormSchema),
+    const blocs : string[] = ["Bloc A", "Bloc B", "Amphi"];
+    const createRoomForm = useForm<z.infer<typeof classroomSchema>>({
+        resolver: zodResolver(classroomSchema),
     })
-    function onSubmit(values: z.infer<typeof roomFormSchema>) {
-        console.log(values);
+    const {createClassroom} = useClassroom();
+    async function onSubmit(values: z.infer<typeof classroomSchema>) {
+
+        await createClassroom({
+            roomName: values.roomName,
+            bloc: values.blocName,
+            capacity: values.capacity
+
+        })
+            .then()
+            .catch();
+
+        // TODO: Add a toast to show the success message
     }
     return(
-        <Form {... editRoomForm}>
-            <form onSubmit={editRoomForm.handleSubmit(onSubmit)} className="space-y-6">
+        <Form {... createRoomForm}>
+            <form onSubmit={createRoomForm.handleSubmit(onSubmit)} className="space-y-6">
                 <div className="grid gap-y-4">
                     <FormField
-                        control={editRoomForm.control}
+                        control={createRoomForm.control}
                         name="roomName"
                         render={({field}) => (
                             <FormItem className="md:col-start-1">
@@ -38,12 +48,12 @@ export default function CreateRoomFrom() {
                                 <FormControl>
                                     <Input type="text" {...field} />
                                 </FormControl>
-                                <FormMessage/>
+                                <FormMessage className="text-xs"/>
                             </FormItem>
                         )}
                     />
                     <FormField
-                        control={editRoomForm.control}
+                        control={createRoomForm.control}
                         name="capacity"
                         render={({field}) => (
                             <FormItem className="md:col-start-1">
@@ -51,18 +61,18 @@ export default function CreateRoomFrom() {
                                 <FormControl>
                                     <Input min={1} type="number" {...field} />
                                 </FormControl>
-                                <FormMessage/>
+                                <FormMessage className="text-xs"/>
                             </FormItem>
                         )}
                     />
                     <FormField
-                        control={editRoomForm.control}
+                        control={createRoomForm.control}
                         name="blocName"
                         render={() => (
                             <FormItem>
                                 <FormLabel>Bloc</FormLabel>
                                 <FormControl>
-                                    <Select onValueChange={(value : string) => editRoomForm.setValue("blocName",value)}>
+                                    <Select onValueChange={(value : string) => createRoomForm.setValue("blocName",value)}>
                                         <SelectTrigger>
                                             <SelectValue placeholder="Bloc"/>
                                         </SelectTrigger>
@@ -76,7 +86,7 @@ export default function CreateRoomFrom() {
                                         </SelectContent>
                                     </Select>
                                 </FormControl>
-                                <FormMessage/>
+                                <FormMessage className="text-xs"/>
                             </FormItem>
                         )}
                     />

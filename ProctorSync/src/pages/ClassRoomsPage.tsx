@@ -8,6 +8,7 @@ import Paginator from "@/components/Paginator.tsx";
 import ClassroomCard from "@/components/ClassroomCard.tsx";
 import CreateRoomDialog from "@/components/CreateRoomDialog.tsx";
 import {Button} from "@/components/ui/button.tsx";
+import {useClassroom} from "@/hooks/use-classroom.ts";
 
 export default function ClassRoomsPage() {
     const [currentPage, setCurrentPage] = useState<number>(1);
@@ -20,6 +21,7 @@ export default function ClassRoomsPage() {
         setCurrentPage(currentPage);
     };
 
+    const {classrooms} = useClassroom();
 
     return(
         <Card className="bg-transparent border-0 shadow-none">
@@ -52,8 +54,7 @@ export default function ClassRoomsPage() {
                 </div>
                 <div className="flex flex-col gap-y-6 md:gap-y-12">
                     <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5">
-                        <ClassroomCard />
-
+                        {classrooms?.map((classroom) => (<ClassroomCard classroom={classroom} key={classroom?.id} />))}
                     </div>
                     <Paginator
                         currentPage={currentPage}

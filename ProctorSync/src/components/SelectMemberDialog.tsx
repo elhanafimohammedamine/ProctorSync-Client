@@ -16,26 +16,58 @@ import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar.tsx";
 import {CheckIcon, Plus} from "lucide-react";
 import {cn} from "@/lib/utils.ts";
 import Search from "@/components/Search.tsx";
-import {ReactNode, useState} from "react";
-import {users} from "@/data/users.tsx";
-import {IUser} from "@/types/types.ts";
+import {ReactNode, useEffect, useMemo, useState} from "react";
+import {IProfessorResponse, } from "@/types/types.ts";
 import {buttonStyle} from "@/assets/style/CustomStyles.ts";
+import {useGroup} from "@/hooks/use-group.ts";
+import {useProfessor} from "@/hooks/use-professor.ts";
 
 interface SelectPatientDialogProps {
 	trigger: ReactNode,
+	professorsInGroup: IProfessorResponse[],
+	groupId: string
+
 }
 
-export default function SelectMemberDialog({trigger}: SelectPatientDialogProps) {
+export default function SelectMemberDialog({trigger, groupId, professorsInGroup}: SelectPatientDialogProps) {
+	const { professors } = useProfessor();
+	const { addMembers } = useGroup(groupId);
+	const [selectedProfessors, setSelectedProfessors] = useState<IProfessorResponse[]>([]);
 
-	const [selectedUsers, setSelectedUsers] = useState<IUser[]>([])
-	const [filteredUsers, setFilteredUsers] = useState(users);
+// Use a memoized value to avoid recalculating unless dependencies change
+	const initialProfessors = useMemo(() => {
+		return professors?.filter(
+			(prof) => !professorsInGroup?.some((profInGroup) => profInGroup?.id === prof?.id)
+		) || [];
+	}, [professors, professorsInGroup]);
+
+// Initialize state with the memoized initialProfessors
+	const [filteredProfessors, setFilteredProfessors] = useState<IProfessorResponse[]>(initialProfessors);
+
+// Optionally, if you want filteredProfessors to be in sync with initialProfessors when professors or professorsInGroup change
+	useEffect(() => {
+		setFilteredProfessors(initialProfessors);
+	}, [initialProfessors]);
+
+
+
+
 	const handleModalSearchInputChange = (query: string) => {
-		setFilteredUsers(users
-			.filter((user) =>
-				user.firstName.toLowerCase().includes(query.toLowerCase()) ||
-				user.lastName.toLowerCase().includes(query.toLowerCase())
+		setFilteredProfessors(professors
+			?.filter((prof) =>
+				prof?.firstName!.toLowerCase()!.includes(query.toLowerCase()) ||
+				prof?.lastName!.toLowerCase()!.includes(query.toLowerCase())
 			)
 		)
+	}
+
+	const handleAddMembers = async () => {
+		const members = selectedProfessors.map((prof) => prof.id);
+		await addMembers(members)
+			.then(() => setSelectedProfessors([]))
+			.catch((error) => console.error(error));
+			// TODO - add toast
+
 	}
 
 
@@ -59,36 +91,36 @@ export default function SelectMemberDialog({trigger}: SelectPatientDialogProps) 
 							className="w-full block space-y-2" type="multiple"
 							onValueChange={(value) => {
 								if(value) {
-									setSelectedUsers([...selectedUsers, ...value.map((user) => JSON.parse(user))])
+									setSelectedProfessors([...selectedProfessors, ...value.map((user) => JSON.parse(user))])
 								}
 							}}
 						>
-							{filteredUsers.map((user) => (
+							{filteredProfessors?.map((prof) => (
 								<ToggleGroupItem
 									variant="outline"
 									className="w-full h-full"
-									key={user.id}
-									value={JSON.stringify(user!)}
-									aria-label={`Toggle ${user.id}`}
+									key={prof.id}
+									value={JSON.stringify(prof!)}
+									aria-label={`Toggle ${prof.id}`}
 								>
 									<div className="w-full flex items-center py-3">
 										<Avatar className="size-9">
 											<AvatarImage src="/avatars/04.png" alt="Avatar" />
 											<AvatarFallback>
-												{user.firstName.charAt(0).toUpperCase()}{user.lastName.charAt(0).toUpperCase()}
+												{prof.firstName.charAt(0).toUpperCase()}{prof.lastName.charAt(0).toUpperCase()}
 											</AvatarFallback>
 										</Avatar>
 										<div className="ml-4 space-y-1">
-											<p className="text-sm text-start font-medium leading-none">{user.firstName} {user.lastName}</p>
+											<p className="text-sm text-start font-medium leading-none">{prof.firstName} {prof.lastName}</p>
 											<p className="text-xs text-start text-muted-foreground">
-												{user.email}
+												{prof.email}
 											</p>
 										</div>
 									</div>
 									<CheckIcon
 										className={cn(
 											"ml-auto h-4 w-4",
-											selectedUsers?.some(u => u.id === user.id) ? "opacity-100" : "opacity-0"
+											selectedProfessors?.some(u => u.id === prof.id) ? "opacity-100" : "opacity-0"
 										)}
 									/>
 								</ToggleGroupItem>
@@ -99,15 +131,14 @@ export default function SelectMemberDialog({trigger}: SelectPatientDialogProps) 
 				<DialogFooter className="justify-end mt-5">
 					<DialogClose asChild>
 						<div className="items-center flex space-x-2">
-							<Button size="sm" variant="outline" type="button" onClick={() => setSelectedUsers([])}>Fermer</Button>
-							<Button size="sm" type="button" className="dark:bg-secondary flex gap-x-1 dark:text-white" onClick={() => {}}>
+							<Button size="sm" variant="outline" type="button" onClick={() => setSelectedProfessors([])}>Fermer</Button>
+							<Button size="sm" type="button" className="dark:bg-secondary flex gap-x-1 dark:text-white" onClick={handleAddMembers}>
 								<Plus className="size-4" />
 								Ajouter
 							</Button>
 						</div>
 					</DialogClose>
 				</DialogFooter>
-
 			</DialogContent>
 		</Dialog>
 	)

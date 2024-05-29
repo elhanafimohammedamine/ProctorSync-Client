@@ -12,17 +12,17 @@ import {
 import {Button} from "@/components/ui/button.tsx";
 import {useForm} from "react-hook-form";
 import {z} from "zod";
-import {roomFormSchema} from "@/zod/schemas/room-schema.ts";
+import {classroomSchema} from "@/zod/schemas/classroom-schema.ts";
 import {zodResolver} from "@hookform/resolvers/zod";
 
 export default function EditRoomFrom() {
     const blocs : string[] = [
         "Bloc A", "Bloc B", "Amphi"
     ];
-    const editRoomForm = useForm<z.infer<typeof roomFormSchema>>({
-        resolver: zodResolver(roomFormSchema),
+    const editRoomForm = useForm<z.infer<typeof classroomSchema>>({
+        resolver: zodResolver(classroomSchema),
     })
-    function onSubmit(values: z.infer<typeof roomFormSchema>) {
+    function onSubmit(values: z.infer<typeof classroomSchema>) {
         console.log(values);
     }
     return(
@@ -38,7 +38,7 @@ export default function EditRoomFrom() {
                                 <FormControl>
                                     <Input type="text" {...field} />
                                 </FormControl>
-                                <FormMessage/>
+                                <FormMessage className="text-xs"/>
                             </FormItem>
                         )}
                     />
@@ -51,7 +51,7 @@ export default function EditRoomFrom() {
                                 <FormControl>
                                     <Input type="number" {...field} />
                                 </FormControl>
-                                <FormMessage/>
+                                <FormMessage className="text-xs"/>
                             </FormItem>
                         )}
                     />
@@ -76,7 +76,7 @@ export default function EditRoomFrom() {
                                         </SelectContent>
                                     </Select>
                                 </FormControl>
-                                <FormMessage/>
+                                <FormMessage className="text-xs"/>
                             </FormItem>
                         )}
                     />

@@ -7,6 +7,7 @@ import ProfessorsPage from "@/pages/ProfessorsPage.tsx";
 import ProfessorsGroupsPage from "@/pages/ProfessorsGroupsPage.tsx";
 import GroupMembersPage from "@/pages/GroupMembersPage.tsx";
 import LoginPage from "@/pages/LoginPage.tsx";
+import AdministratorsPage from "@/pages/administratorsPage.tsx";
 
 
 export const router = createBrowserRouter([
@@ -22,6 +23,7 @@ export const router = createBrowserRouter([
                 element: <DefaultLayoutAdmin/>,
                 children: [
                     {path: "enseignants", element: <ProfessorsPage/>},
+                    {path: "administrateurs", element: <AdministratorsPage/>},
                     {path: "modules", element: <PedagogicalElements/>},
                     {path: "salles", element: <ClassRoomsPage/>},
                     {path: "groupes", element: <ProfessorsGroupsPage/>},

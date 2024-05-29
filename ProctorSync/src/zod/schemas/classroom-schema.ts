@@ -1,5 +1,5 @@
 import {z} from "zod";
-export const roomFormSchema = z.object({
+export const classroomSchema = z.object({
     roomName: z.string({
         required_error: "Le nom de la salle est requis.",
     }).min(5,{message: "Le nom de la salle doit comporter au moins 5 caractères"})

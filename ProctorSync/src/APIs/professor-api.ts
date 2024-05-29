@@ -4,6 +4,11 @@ import axiosInstance from "@/http/axios.ts";
 
 export default {
 	createProfessor: async (data: IProfessorRequest) => {
-		return await axiosInstance.post("/professor/create", data);
+		const response = await axiosInstance.post("/professor/create", data);
+		return response.data;
+	},
+	getProfessors: async () => {
+		const response = await axiosInstance.get("/professor");
+		return response.data;
 	}
 }

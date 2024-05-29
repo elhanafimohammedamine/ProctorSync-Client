@@ -1,6 +1,6 @@
-import {useMutation} from "react-query";
+import {useMutation, useQuery} from "react-query";
 import ProfessorApi from "@/APIs/professor-api.ts";
-import {IProfessorRequest} from "@/types/types.ts";
+import {IProfessorRequest, IProfessorResponse} from "@/types/types.ts";
 
 
 export const useProfessor = () => {
@@ -20,12 +20,28 @@ export const useProfessor = () => {
 
 	})
 
+	const {data, isLoading: professorsAreLoading} = useQuery({
+		queryKey: "professors",
+		queryFn: async () => await ProfessorApi.getProfessors(),
+		onSuccess: (data) => {
+			console.log(data);
+		},
+		onError: (error) => {
+			console.error(error);
+		}
+	})
+
+	const professors: IProfessorResponse[] = data;
+
 	const createProfessor = async (data: IProfessorRequest) => await createProfessorMutation(data);
 
 
 	return {
 		createProfessor,
-		professorInsertionIsLoading
+		professorInsertionIsLoading,
+		professors,
+		professorsAreLoading
+
 	}
 
 }

@@ -5,9 +5,15 @@ import DeleteEntityDialog from "@/components/DeleteEntityDialog.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {useState} from "react";
 import ClassIcon from "@/assets/images/class1.svg"
+import {IClassroomResponse} from "@/types/types.ts";
 
 
-export default function ClassroomCard() {
+interface IClassroomCardProps {
+	classroom: IClassroomResponse;
+}
+
+
+export default function ClassroomCard({classroom}: IClassroomCardProps) {
 	const [isDeleteOpen, setDeleteOpen] = useState(false);
 	const [isEditOpen, setEditOpen] = useState(false);
 	const toggleDeleteDialog = () => setDeleteOpen(!isDeleteOpen)
@@ -23,16 +29,16 @@ export default function ClassroomCard() {
 		<CardContent>
 			<div className="pt-4">
 				<h3 className="text-xl font-semibold text-gray-800 dark:text-neutral-300 dark:hover:text-white">
-					Nom de salle
+					{classroom?.name}
 				</h3>
 				<div className="flex items-center gap-x-5 mt-3">
 					<div className="flex items-center gap-x-2">
 						<UsersRound className="size-4 text-primary" />
-						<span className="text-xs font-medium text-muted-foreground">22 sièges</span>
+						<span className="text-xs font-medium text-muted-foreground">{classroom?.capacity} sièges</span>
 					</div>
 					<div className="flex items-center gap-x-2">
 						<Building2 className="size-4 text-primary" />
-						<span className="text-xs font-medium text-muted-foreground">Bloc A</span>
+						<span className="text-xs font-medium text-muted-foreground">{classroom?.bloc}</span>
 					</div>
 				</div>
 			</div>

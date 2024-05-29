@@ -6,13 +6,24 @@ import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {groupFormSchema} from "@/zod/schemas/group-schema.ts";
 import {Textarea} from "@/components/ui/textarea.tsx";
+import {useGroup} from "@/hooks/use-group.ts";
 
 export default function CreateGroupFrom() {
+    const {createGroup} = useGroup();
+
     const createGroupForm = useForm<z.infer<typeof groupFormSchema>>({
         resolver: zodResolver(groupFormSchema),
     })
-    function onSubmit(values: z.infer<typeof groupFormSchema>) {
-        console.log(values);
+
+    async function onSubmit(values: z.infer<typeof groupFormSchema>) {
+        await createGroup({
+            groupName: values.groupName,
+            description: values.description as string,
+        })
+            .then()
+            .catch();
+
+        // TODO: add toast notification for success or error
     }
     return(
         <Form {... createGroupForm}>
@@ -23,11 +34,11 @@ export default function CreateGroupFrom() {
                         name="groupName"
                         render={({field}) => (
                             <FormItem className="md:col-start-1">
-                                <FormLabel>Nom de Groupe</FormLabel>
+                                <FormLabel>Nom de groupe</FormLabel>
                                 <FormControl>
                                     <Input type="text" {...field} />
                                 </FormControl>
-                                <FormMessage/>
+                                <FormMessage className="text-xs"/>
                             </FormItem>
                         )}
                     />
@@ -40,7 +51,7 @@ export default function CreateGroupFrom() {
                                 <FormControl>
                                     <Textarea placeholder="description de groupe" className="resize-none"{...field}/>
                                 </FormControl>
-                                <FormMessage/>
+                                <FormMessage className="text-xs"/>
                             </FormItem>
                         )}
                     />

@@ -7,6 +7,7 @@ import Paginator from "@/components/Paginator.tsx";
 import {useState} from "react";
 import {Button} from "@/components/ui/button.tsx";
 import CreateGroupDialog from "@/components/CreateGroupDialog.tsx";
+import {useGroup} from "@/hooks/use-group.ts";
 
 
 export default function ProfessorsGroupsPage() {
@@ -19,6 +20,9 @@ export default function ProfessorsGroupsPage() {
 	const handlePageChange = (currentPage : number) => {
 		setCurrentPage(currentPage);
 	};
+
+	const {groups} = useGroup()
+
 	return(
 		<Card className="bg-transparent border-0 shadow-none">
 			<div className="flex flex-col md:flex-row justify-between md:items-center">
@@ -47,10 +51,9 @@ export default function ProfessorsGroupsPage() {
 				</div>
 				<div className="flex flex-col gap-y-6 md:gap-y-12">
 					<div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5">
-						<GroupCard />
-						<GroupCard />
-						<GroupCard />
-
+						{groups?.map((group) => (
+							<GroupCard key={group.id} group={group}/>
+						))}
 					</div>
 					<Paginator
 						currentPage={currentPage}

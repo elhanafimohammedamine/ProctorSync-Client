@@ -9,66 +9,19 @@ import {Avatar, AvatarFallback} from "@/components/ui/avatar.tsx";
 import SelectMemberDialog from "@/components/SelectMemberDialog.tsx";
 import OutMemberConfirmationDialog from "@/components/OutMemberConfirmationDialog.tsx";
 import {useState} from "react";
-
-const people = [
-	{
-		name: 'Leslie Alexander',
-		email: 'leslie.alexander@example.com',
-		role: 'Co-Founder / CEO',
-		imageUrl:
-			'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-		lastSeen: '3h ago',
-		lastSeenDateTime: '2023-01-23T13:23Z',
-	},
-	{
-		name: 'Michael Foster',
-		email: 'michael.foster@example.com',
-		role: 'Co-Founder / CTO',
-		imageUrl:
-			'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-		lastSeen: '3h ago',
-		lastSeenDateTime: '2023-01-23T13:23Z',
-	},
-	{
-		name: 'Dries Vincent',
-		email: 'dries.vincent@example.com',
-		role: 'Business Relations',
-		imageUrl:
-			'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-		lastSeen: null,
-	},
-	{
-		name: 'Lindsay Walton',
-		email: 'lindsay.walton@example.com',
-		role: 'Front-end Developer',
-		imageUrl:
-			'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-		lastSeen: '3h ago',
-		lastSeenDateTime: '2023-01-23T13:23Z',
-	},
-	{
-		name: 'Courtney Henry',
-		email: 'courtney.henry@example.com',
-		role: 'Designer',
-		imageUrl:
-			'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-		lastSeen: '3h ago',
-		lastSeenDateTime: '2023-01-23T13:23Z',
-	},
-	{
-		name: 'Tom Cook',
-		email: 'tom.cook@example.com',
-		role: 'Director of Product',
-		imageUrl:
-			'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-		lastSeen: null,
-	},
-]
+import {useGroup} from "@/hooks/use-group.ts";
+import {useLocation} from "react-router-dom";
 
 export default function GroupMembersPage() {
 
+	const location = useLocation();
+	const {group} = useGroup(location.state.groupId);
+
+
 	const [isOpen, setOpen] = useState(false);
 	const toggleDialog = () => setOpen(!isOpen)
+
+
 
 
 	return (
@@ -86,27 +39,27 @@ export default function GroupMembersPage() {
 						A software that develops products for software developers and developments.
 					</p>
 				</div>
-				<SelectMemberDialog trigger={
+				<SelectMemberDialog professorsInGroup={group?.professors} groupId={location.state.groupId} trigger={
 					<div><UserRoundPlus className="size-4 mr-1.5" />
 						Nouveau membre</div>
 				} />
 			</div>
 			<ul role="list" className="space-y-2">
-				{people.map((person) => (
-					<li key={person.email} className="flex justify-between items-center bg-card rounded-xl px-6 gap-x-6 py-3">
+				{group?.professors?.map((prof) => (
+					<li key={prof?.id} className="flex justify-between items-center bg-card rounded-xl px-6 gap-x-6 py-3">
 						<div className="flex justify-center items-center min-w-0 gap-x-4">
 							<Avatar className="rounded-lg">
 								<AvatarFallback className="rounded-lg bg-gray-200 dark:bg-muted-foreground/15 font-medium">CN</AvatarFallback>
 							</Avatar>
 							<div className="min-w-0 flex-auto">
-								<p className="text-sm font-semibold leading-6 ">{person.name}</p>
-								<p className="truncate text-xs leading-5 text-muted-foreground">{person.email}</p>
-								<p className="truncate text-xs leading-5 text-muted-foreground">0611376395</p>
+								<p className="text-sm font-semibold leading-6 ">{prof?.firstName} {prof?.lastName}</p>
+								<p className="truncate text-xs leading-5 text-muted-foreground">{prof?.email}</p>
+								<p className="truncate text-xs leading-5 text-muted-foreground">{prof?.phone}</p>
 							</div>
 						</div>
 						<div className="flex items-center flex-row space-x-5">
 							<div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-								<p className="text-sm leading-6 dark:text-gray-100 text-gray-900">Enseignant</p>
+								<p className="text-sm leading-6 text-muted-foreground italic">Enseignant</p>
 							</div>
 							<DropdownMenu>
 								<DropdownMenuTrigger>
@@ -125,6 +78,7 @@ export default function GroupMembersPage() {
 						</div>
 					</li>
 				))}
+				{group?.professors?.length === 0 && (<p className="text-sm mt-56 text-muted-foreground italic text-center font-light">Aucun membre</p>)}
 			</ul>
 		</div>
 	)
