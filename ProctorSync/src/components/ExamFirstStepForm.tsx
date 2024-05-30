@@ -10,13 +10,29 @@ import {
     SelectTrigger,
     SelectValue
 } from "@/components/ui/select.tsx";
+import {Input} from "@/components/ui/input.tsx";
+import {useEffect} from "react";
 
 interface FirstStepProps {
     form: UseFormReturn<StepOneExamForm>
 }
 
 export default function ExamFirstStepForm({form} : FirstStepProps) {
+    const generateAcademicYear = () : string => {
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth();
+        const currentYear = currentDate.getFullYear();
 
+        if (currentMonth >= 7) {
+            return String(currentYear) + " - " + String(currentYear + 1);
+        } else {
+            return String(currentYear) + " - " + String(currentYear - 1);
+        }
+
+    };
+    useEffect(() => {
+        form.setValue("academicYear", generateAcademicYear());
+    }, []);
     return (
         <Form {... form}>
             <form className="space-y-6 py-6 md:px-20 md:py-12">
@@ -24,11 +40,11 @@ export default function ExamFirstStepForm({form} : FirstStepProps) {
                     <FormField
                         control={form.control}
                         name="subjectId"
-                        render={() => (
+                        render={({field}) => (
                             <FormItem>
                                 <FormLabel>Matière d'Examen</FormLabel>
                                 <FormControl>
-                                    <Select onValueChange={(value : string) => form.setValue("subjectId",value)}>
+                                    <Select value={field.value} onValueChange={(value : string) => form.setValue("subjectId",value)}>
                                         <SelectTrigger>
                                             <SelectValue placeholder="Matière d'examen"/>
                                         </SelectTrigger>
@@ -49,11 +65,11 @@ export default function ExamFirstStepForm({form} : FirstStepProps) {
                     <FormField
                         control={form.control}
                         name="examTypeId"
-                        render={() => (
+                        render={({field}) => (
                             <FormItem>
                                 <FormLabel>Type d'Examen</FormLabel>
                                 <FormControl>
-                                    <Select onValueChange={(value : string) => form.setValue("examTypeId",value)}>
+                                    <Select {...field} onValueChange={(value : string) => form.setValue("examTypeId",value)}>
                                         <SelectTrigger>
                                             <SelectValue placeholder="Type d'examen"/>
                                         </SelectTrigger>
@@ -74,11 +90,11 @@ export default function ExamFirstStepForm({form} : FirstStepProps) {
                     <FormField
                         control={form.control}
                         name="sessionId"
-                        render={() => (
+                        render={({field}) => (
                             <FormItem>
                                 <FormLabel>Session</FormLabel>
                                 <FormControl>
-                                    <Select onValueChange={(value : string) => form.setValue("sessionId",value)}>
+                                    <Select {...field} onValueChange={(value : string) => form.setValue("sessionId",value)}>
                                         <SelectTrigger>
                                             <SelectValue placeholder="Session d'examen"/>
                                         </SelectTrigger>
@@ -97,23 +113,12 @@ export default function ExamFirstStepForm({form} : FirstStepProps) {
                     />
                     <FormField
                         control={form.control}
-                        name="coordinatorId"
-                        render={() => (
+                        name="academicYear"
+                        render={({field}) => (
                             <FormItem>
-                                <FormLabel>Coordinateur</FormLabel>
+                                <FormLabel>Année universitaire</FormLabel>
                                 <FormControl>
-                                    <Select onValueChange={(value : string) => form.setValue("coordinatorId",value)}>
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Coordinateur d'examen"/>
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectGroup>
-                                                <SelectLabel>Coordinateur</SelectLabel>
-                                                <SelectItem value="Boudaa">Boudaa</SelectItem>
-                                                <SelectItem value="Dadi">Dadi</SelectItem>
-                                            </SelectGroup>
-                                        </SelectContent>
-                                    </Select>
+                                    <Input type="text" disabled defaultValue={generateAcademicYear()}  {...field}/>
                                 </FormControl>
                                 <FormMessage/>
                             </FormItem>
