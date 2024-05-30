@@ -15,11 +15,10 @@ import {
     SelectTrigger,
     SelectValue
 } from "@/components/ui/select.tsx";
-
-interface FirstStepProps {
+interface SecondStepProps {
     form: UseFormReturn<StepTwoExamForm>
 }
-export default function ExamSecondStepForm({form} : FirstStepProps) {
+export default function ExamSecondStepForm({form} : SecondStepProps) {
     const generateTimeOptions = () => {
         const options = [];
         for (let hour = 8; hour <= 16; hour++) {
@@ -32,28 +31,25 @@ export default function ExamSecondStepForm({form} : FirstStepProps) {
         return options;
     };
 
-    const calculateDurationInSeconds = (hours, minutes) => {
+    const calculateDurationInSeconds = (hours : number, minutes: number) => {
         return (hours * 3600) + (minutes * 60);
     };
 
     const durations: {label: string, value: number}[] = [];
     for (let hours = 0; hours <= 3; hours++) {
-        // Start from 45 minutes if hours is 0, otherwise start from 0
         const startMinutes = hours === 0 ? 45 : 0;
 
         for (let minutes = startMinutes; minutes < 60; minutes += 15) {
-            // Calculate duration in seconds
             const durationInSeconds = calculateDurationInSeconds(hours, minutes);
-
-            // Format duration label
             const label = `${hours > 0 ? hours + " heure" + (hours > 1 ? "s" : "") : ""} ${minutes > 0 ? minutes + " minute" + (minutes > 1 ? "s" : "") : ""}`;
 
             durations.push({ label, value: durationInSeconds });
         }
     }
+
     return (
         <Form {... form}>
-            <form className="space-y-6 py-6 md:px-20 md:py-12">
+            <form  className="space-y-6 py-6 md:px-20 md:py-12">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <FormField
                         control={form.control}
@@ -103,11 +99,11 @@ export default function ExamSecondStepForm({form} : FirstStepProps) {
                     <FormField
                         control={form.control}
                         name="startTime"
-                        render={() => (
+                        render={({field}) => (
                             <FormItem>
                                 <FormLabel>Heure de début</FormLabel>
                                 <FormControl>
-                                    <Select onValueChange={(value : string) => form.setValue("startTime",value)}>
+                                    <Select onValueChange={(value : string) => form.setValue("startTime",value)} {...field}>
                                         <SelectTrigger>
                                             <SelectValue placeholder="heure de début d'examen"/>
                                         </SelectTrigger>
@@ -130,11 +126,11 @@ export default function ExamSecondStepForm({form} : FirstStepProps) {
                     <FormField
                         control={form.control}
                         name="plannedDuration"
-                        render={() => (
+                        render={({field}) => (
                             <FormItem>
                                 <FormLabel>Durée prévue</FormLabel>
                                 <FormControl>
-                                    <Select onValueChange={(value : string) => form.setValue("plannedDuration",value)}>
+                                    <Select {...field} onValueChange={(value : string) => form.setValue("plannedDuration",value)}>
                                         <SelectTrigger>
                                             <SelectValue placeholder="Durée prévue d'examen"/>
                                         </SelectTrigger>
@@ -154,11 +150,11 @@ export default function ExamSecondStepForm({form} : FirstStepProps) {
                     <FormField
                         control={form.control}
                         name="actualDuration"
-                        render={() => (
+                        render={({field}) => (
                             <FormItem>
                                 <FormLabel>Durée réelle</FormLabel>
                                 <FormControl>
-                                    <Select onValueChange={(value : string) => form.setValue("actualDuration",value)}>
+                                    <Select {...field} onValueChange={(value : string) => form.setValue("actualDuration",value)}>
                                         <SelectTrigger>
                                             <SelectValue placeholder="Durée réelle d'examen"/>
                                         </SelectTrigger>

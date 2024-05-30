@@ -7,8 +7,6 @@ import ProfessorsGroupsPage from "@/pages/ProfessorsGroupsPage.tsx";
 import GroupMembersPage from "@/pages/GroupMembersPage.tsx";
 import LoginPage from "@/pages/LoginPage.tsx";
 import PersonalPage from "@/pages/personalPage.tsx";
-
-
 import ExamSchedulingPage from "@/pages/ExamSchedulingPage.tsx";
 
 

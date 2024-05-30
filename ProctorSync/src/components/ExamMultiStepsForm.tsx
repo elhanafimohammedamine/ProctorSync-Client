@@ -14,6 +14,7 @@ import {
 } from "@/zod/schemas/exam-schema.ts";
 import ExamFirstStepForm from "@/components/ExamFirstStepForm.tsx";
 import ExamSecondStepForm from "@/components/ExamSecondStepForm.tsx";
+import ExamThirdStepForm from "@/components/ExamThirdStepForm.tsx";
 
 export default function ExamMultiStepsForm(){
     const steps = [
@@ -64,16 +65,21 @@ export default function ExamMultiStepsForm(){
         }
 
         const isValid = await activeForm!.trigger();
-        console.log(activeForm!.formState.errors)
-        if (isValid && activeStep < steps.length) {
+        if(isValid) {
             const currentFormValues = activeForm!.getValues();
             Object.entries(currentFormValues).forEach(([key, value]) => {
+                // @ts-ignore
                 fullExamFrom.setValue(key, value);
             });
-            console.log(fullExamFrom.getValues())
-            const nextStep = activeStep + 1;
-            setActiveStep(nextStep);
-            setActiveTab(steps[nextStep - 1].element);
+            if (activeStep < steps.length) {
+                const nextStep = activeStep + 1;
+                setActiveStep(nextStep);
+                setActiveTab(steps[nextStep - 1].element);
+            }
+            if(activeStep === steps.length){
+                // handle form submission here
+                console.log(fullExamFrom.getValues())
+            }
         }
     };
 
@@ -127,6 +133,7 @@ export default function ExamMultiStepsForm(){
                     <ExamSecondStepForm form={stepTwoForm}/>
                 </TabsContent>
                 <TabsContent value="form3">
+                    <ExamThirdStepForm form={stepThreeForm}/>
                 </TabsContent>
             </Tabs>
             <div className="space-x-2 w-full flex justify-end">
