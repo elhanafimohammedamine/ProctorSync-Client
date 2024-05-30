@@ -3,7 +3,7 @@ import {IClassroomRequest, IClassroomResponse, IClassroomUpdateRequest} from "@/
 import ClassroomApi from "@/APIs/classroom-api.ts";
 
 
-export const useClassroom = (classroomId?: string) => {
+export const useClassroom = (startDateTime?: string, endDateTime?:string, classroomId?: string) => {
 
 	const queryClient = useQueryClient();
 
@@ -61,6 +61,22 @@ export const useClassroom = (classroomId?: string) => {
 	const classrooms : IClassroomResponse[] = data;
 
 
+	const {data: availableClassroomsData, isLoading: availableClassroomsAreLoading} = useQuery({
+		queryKey: "availableClassrooms",
+		queryFn: async () => await ClassroomApi.getAvailableClassrooms(startDateTime!, endDateTime!),
+		onSuccess: (response) => {
+			console.log(response)
+
+		},
+		onError: (error) => {
+			console.error('Error while fetching available classrooms', error)
+		},
+		enabled: !!startDateTime && !!endDateTime
+	})
+
+	const availableClassrooms : IClassroomResponse[] = availableClassroomsData;
+
+
 	const createClassroom = async (classroom: IClassroomRequest) => await createClassroomMutation(classroom);
 	const updateClassroom = async (classroom: IClassroomUpdateRequest) => await updateClassroomMutation(classroom);
 	const deleteClassroom = async (classroomId: string) => await deleteClassroomMutation(classroomId);
@@ -72,7 +88,9 @@ export const useClassroom = (classroomId?: string) => {
 		updateClassroom,
 		updateClassroomIsLoading,
 		deleteClassroom,
-		deleteClassroomIsLoading
+		deleteClassroomIsLoading,
+		availableClassrooms,
+		availableClassroomsAreLoading
 	}
 }
 

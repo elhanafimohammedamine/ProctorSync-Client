@@ -132,3 +132,23 @@ export interface IPedagogicElementResponse {
 	professor: IProfessorResponse;
 	coordinator: IProfessorResponse;
 }
+
+export interface ISessionResponse {
+	id: string;
+	name: string;
+}
+
+export interface ISemesterResponse {
+	id: string;
+	name: string;
+}
+
+export interface IExamTypeResponse {
+	id: string;
+	name: string;
+}
+
+export interface IDateRangeRequest {
+	startDateTime: string;
+	endDateTime: string;
+}

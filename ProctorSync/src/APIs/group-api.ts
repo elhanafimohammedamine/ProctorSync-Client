@@ -18,5 +18,9 @@ export default {
 	addMemebers: async (groupId: string, members: string[]) => {
 		const response = await axiosInstance.post(`/group/add-members/${groupId}`, members);
 		return response.data;
+	},
+	deleteGroup: async (groupId: string) => {
+		const response = await axiosInstance.delete(`/group/delete/${groupId}`);
+		return response.data;
 	}
 }

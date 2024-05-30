@@ -12,6 +12,9 @@ import {
 } from "@/components/ui/select.tsx";
 import {Input} from "@/components/ui/input.tsx";
 import {useEffect} from "react";
+import {usePedagogicElement} from "@/hooks/use-pedagogic-element.ts";
+import {useExamType} from "@/hooks/use-exam-type.ts";
+import {useSession} from "@/hooks/use-session.ts";
 
 interface FirstStepProps {
     form: UseFormReturn<StepOneExamForm>
@@ -33,6 +36,13 @@ export default function ExamFirstStepForm({form} : FirstStepProps) {
     useEffect(() => {
         form.setValue("academicYear", generateAcademicYear());
     }, []);
+
+
+    const {pedagogicElements} = usePedagogicElement();
+    const {examTypes} = useExamType();
+    const {sessions} = useSession();
+
+
     return (
         <Form {... form}>
             <form className="space-y-6 py-6 md:px-20 md:py-12">
@@ -51,9 +61,9 @@ export default function ExamFirstStepForm({form} : FirstStepProps) {
                                         <SelectContent>
                                             <SelectGroup>
                                                 <SelectLabel>Matière</SelectLabel>
-                                                <SelectItem value="ProgrammationJava">Programation Java</SelectItem>
-                                                <SelectItem value="ProgramationSpring">Programation Spring Boot</SelectItem>
-                                                <SelectItem value="ProgramationC">Programation C++</SelectItem>
+                                                {pedagogicElements?.map((element) => (
+                                                    <SelectItem key={element?.id} value={element?.id}>{element?.elementTitle}</SelectItem>
+                                                ))}
                                             </SelectGroup>
                                         </SelectContent>
                                     </Select>
@@ -75,10 +85,10 @@ export default function ExamFirstStepForm({form} : FirstStepProps) {
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
-                                                <SelectLabel>Examen Type</SelectLabel>
-                                                <SelectItem value="Final">Examen Final</SelectItem>
-                                                <SelectItem value="Survellié1">Devoire Survellié 1</SelectItem>
-                                                <SelectItem value="Survellié2">Devoire Survellié 2</SelectItem>
+                                                <SelectLabel>Type d'examen</SelectLabel>
+                                                {examTypes?.map((type) => (
+                                                    <SelectItem key={type?.id} value={type?.id}>{type?.name}</SelectItem>
+                                                ))}
                                             </SelectGroup>
                                         </SelectContent>
                                     </Select>
@@ -101,8 +111,9 @@ export default function ExamFirstStepForm({form} : FirstStepProps) {
                                         <SelectContent>
                                             <SelectGroup>
                                                 <SelectLabel>Session</SelectLabel>
-                                                <SelectItem value="Normale">Session Normale</SelectItem>
-                                                <SelectItem value="Rattrapage">Session Rattrapage</SelectItem>
+                                                {sessions?.map((session) => (
+                                                    <SelectItem key={session?.id} value={session?.id}>{session?.name}</SelectItem>
+                                                ))}
                                             </SelectGroup>
                                         </SelectContent>
                                     </Select>

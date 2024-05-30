@@ -65,15 +65,17 @@ export default function ProfessorsGroupsPage() {
 						showPreviousNext
 					/>
 				</div>
-				<div
-					className="min-h-96 flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
-					x-chunk="dashboard-02-chunk-1">
-					<div className="flex flex-col items-center gap-1 text-center">
-						<h3 className="text-lg md:text-xl text-muted-foreground italic tracking-tight">
-							Aucun groupe pour le moment
-						</h3>
+				{groups?.length === 0 && (
+					<div
+						className="min-h-96 flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
+						x-chunk="dashboard-02-chunk-1">
+						<div className="flex flex-col items-center gap-1 text-center">
+							<h3 className="text-lg md:text-xl text-muted-foreground italic tracking-tight">
+								Aucun groupe pour le moment
+							</h3>
+						</div>
 					</div>
-				</div>
+				)}
 			</CardContent>
 		</Card>
 	)

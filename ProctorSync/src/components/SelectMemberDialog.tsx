@@ -16,7 +16,7 @@ import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar.tsx";
 import {CheckIcon, Plus} from "lucide-react";
 import {cn} from "@/lib/utils.ts";
 import Search from "@/components/Search.tsx";
-import {ReactNode, useEffect, useMemo, useState} from "react";
+import {ReactNode, useEffect, useState} from "react";
 import {IProfessorResponse, } from "@/types/types.ts";
 import {buttonStyle} from "@/assets/style/CustomStyles.ts";
 import {useGroup} from "@/hooks/use-group.ts";
@@ -24,36 +24,29 @@ import {useProfessor} from "@/hooks/use-professor.ts";
 
 interface SelectPatientDialogProps {
 	trigger: ReactNode,
-	professorsInGroup: IProfessorResponse[],
 	groupId: string
 
 }
 
-export default function SelectMemberDialog({trigger, groupId, professorsInGroup}: SelectPatientDialogProps) {
-	const { professors } = useProfessor();
+export default function SelectMemberDialog({trigger, groupId}: SelectPatientDialogProps) {
+	const { professorsWithoutGroups } = useProfessor();
 	const { addMembers } = useGroup(groupId);
 	const [selectedProfessors, setSelectedProfessors] = useState<IProfessorResponse[]>([]);
 
-// Use a memoized value to avoid recalculating unless dependencies change
-	const initialProfessors = useMemo(() => {
-		return professors?.filter(
-			(prof) => !professorsInGroup?.some((profInGroup) => profInGroup?.id === prof?.id)
-		) || [];
-	}, [professors, professorsInGroup]);
 
 // Initialize state with the memoized initialProfessors
-	const [filteredProfessors, setFilteredProfessors] = useState<IProfessorResponse[]>(initialProfessors);
+	const [filteredProfessors, setFilteredProfessors] = useState<IProfessorResponse[]>(professorsWithoutGroups);
 
 // Optionally, if you want filteredProfessors to be in sync with initialProfessors when professors or professorsInGroup change
 	useEffect(() => {
-		setFilteredProfessors(initialProfessors);
-	}, [initialProfessors]);
+		setFilteredProfessors(professorsWithoutGroups);
+	}, [professorsWithoutGroups]);
 
 
 
 
 	const handleModalSearchInputChange = (query: string) => {
-		setFilteredProfessors(professors
+		setFilteredProfessors(professorsWithoutGroups
 			?.filter((prof) =>
 				prof?.firstName!.toLowerCase()!.includes(query.toLowerCase()) ||
 				prof?.lastName!.toLowerCase()!.includes(query.toLowerCase())

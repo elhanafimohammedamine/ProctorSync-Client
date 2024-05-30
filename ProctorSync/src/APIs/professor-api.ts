@@ -10,5 +10,9 @@ export default {
 	getProfessors: async () => {
 		const response = await axiosInstance.get("/professor");
 		return response.data;
+	},
+	getProfessorsWithGroups: async () => {
+		const response = await axiosInstance.get("/professor/professors-without-group");
+		return response.data;
 	}
 }

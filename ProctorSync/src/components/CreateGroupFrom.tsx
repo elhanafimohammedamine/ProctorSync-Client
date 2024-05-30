@@ -7,8 +7,14 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {groupFormSchema} from "@/zod/schemas/group-schema.ts";
 import {Textarea} from "@/components/ui/textarea.tsx";
 import {useGroup} from "@/hooks/use-group.ts";
+import {toast} from "@/components/ui/use-toast.ts";
 
-export default function CreateGroupFrom() {
+interface Props {
+
+    toggleDialog: () => void;
+}
+
+export default function CreateGroupFrom({toggleDialog}: Props) {
     const {createGroup} = useGroup();
 
     const createGroupForm = useForm<z.infer<typeof groupFormSchema>>({
@@ -20,7 +26,11 @@ export default function CreateGroupFrom() {
             groupName: values.groupName,
             description: values.description as string,
         })
-            .then()
+            .then(response => {
+                toast({
+                    description: response
+                })
+            })
             .catch();
 
         // TODO: add toast notification for success or error
@@ -57,7 +67,7 @@ export default function CreateGroupFrom() {
                     />
                 </div>
                 <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
-                    <Button className="space-x-2  w-full md:w-fit">
+                    <Button className="space-x-2  w-full md:w-fit" onClick={toggleDialog}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                              stroke="currentColor" className="size-4">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>

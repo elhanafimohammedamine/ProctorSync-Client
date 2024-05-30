@@ -21,7 +21,7 @@ export default function CreateGroupDialog({isOpen, toggleOpen}: DialogProps) {
                         terminé.
                     </DialogDescription>
                 </DialogHeader>
-                <CreateGroupFrom/>
+                <CreateGroupFrom toggleDialog={toggleOpen}/>
             </DialogContent>
         </Dialog>
     )

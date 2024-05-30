@@ -2,7 +2,6 @@ import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/compo
 import {Search} from "lucide-react";
 import {Input} from "@/components/ui/input.tsx";
 import {useState} from "react";
-import Paginator from "@/components/Paginator.tsx";
 
 
 import ClassroomCard from "@/components/ClassroomCard.tsx";
@@ -12,15 +11,10 @@ import {useClassroom} from "@/hooks/use-classroom.ts";
 import {Loader} from "@/components/Loader.tsx";
 
 export default function ClassroomsPage() {
-    const [currentPage, setCurrentPage] = useState<number>(1);
-    // @ts-ignore
-    const [totalPages, setTotalPages] = useState<number>(1);
+
     const [isOpen, setOpen] = useState(false);
     const toggleDialog = () => setOpen(!isOpen)
 
-    const handlePageChange = (currentPage : number) => {
-        setCurrentPage(currentPage);
-    };
 
     const {classrooms, classroomsAreLoading} = useClassroom();
 
@@ -59,23 +53,18 @@ export default function ClassroomsPage() {
                     <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5">
                         {classrooms?.map((classroom) => (<ClassroomCard classroom={classroom} key={classroom?.id} />))}
                     </div>
-                    <Paginator
-                        currentPage={currentPage}
-                        totalPages={totalPages}
-                        onPageChange={(pageNumber) => handlePageChange(pageNumber)}
-                        showPreviousNext
-                    />
-                </div>
-                {classrooms?.length === 0 && (
-                    <div
-                        className="min-h-96 flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm" x-chunk="dashboard-02-chunk-1">
-                        <div className="flex flex-col items-center gap-1 text-center">
-                            <h3 className=" text-muted-foreground font-light italic tracking-tight">
-                                Aucune salle pour le moment
-                            </h3>
+                    {classrooms?.length === 0 && (
+                        <div
+                            className="min-h-96 flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm" x-chunk="dashboard-02-chunk-1">
+                            <div className="flex flex-col items-center gap-1 text-center">
+                                <h3 className=" text-muted-foreground font-light italic tracking-tight">
+                                    Aucune salle pour le moment
+                                </h3>
+                            </div>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
+
             </CardContent>
         </Card>
     )

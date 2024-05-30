@@ -18,5 +18,9 @@ export default {
 	deleteClassroom: async (id: string) => {
 		const response = await axiosInstance.delete(`/classroom/delete/${id}`);
 		return response.data;
+	},
+	getAvailableClassrooms: async (startDateTime: string, endDateTime: string) => {
+		const response = await axiosInstance.get(`/classroom/available?startDateTime=${startDateTime}&endDateTime=${endDateTime}`);
+		return response.data;
 	}
 }

@@ -15,6 +15,7 @@ import {
 import ExamFirstStepForm from "@/components/ExamFirstStepForm.tsx";
 import ExamSecondStepForm from "@/components/ExamSecondStepForm.tsx";
 import ExamThirdStepForm from "@/components/ExamThirdStepForm.tsx";
+import {addSeconds, format} from "date-fns";
 
 export default function ExamMultiStepsForm(){
     const steps = [
@@ -76,12 +77,31 @@ export default function ExamMultiStepsForm(){
                 setActiveStep(nextStep);
                 setActiveTab(steps[nextStep - 1].element);
             }
+
             if(activeStep === steps.length){
                 // handle form submission here
                 console.log(fullExamFrom.getValues())
             }
         }
     };
+
+    const computeDateTime = () => {
+
+        if (activeStep === 3) {
+            const startDate = fullExamFrom.getValues('examDate')
+            const plannedDuration = fullExamFrom.getValues('plannedDuration')
+            const actualDuration = fullExamFrom.getValues('actualDuration')
+            const startTime = fullExamFrom.getValues('startTime')
+
+            const startDateTime = format(new Date(`${startDate} ${startTime}`), 'yyyy-MM-dd HH:mm:ss')
+            const duration = actualDuration ? actualDuration : plannedDuration
+            const endDateTime = format(addSeconds(new Date(startDateTime), parseInt(duration)), 'yyyy-MM-dd HH:mm:ss')
+            return <ExamThirdStepForm startDateTime={startDateTime} endDateTime={endDateTime} form={stepThreeForm}/>
+        }
+
+
+    }
+
 
     const handleBack = () => {
         if (activeStep > 1) {
@@ -133,7 +153,7 @@ export default function ExamMultiStepsForm(){
                     <ExamSecondStepForm form={stepTwoForm}/>
                 </TabsContent>
                 <TabsContent value="form3">
-                    <ExamThirdStepForm form={stepThreeForm}/>
+                    {computeDateTime()}
                 </TabsContent>
             </Tabs>
             <div className="space-x-2 w-full flex justify-end">

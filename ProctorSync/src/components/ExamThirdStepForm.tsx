@@ -8,8 +8,11 @@ import {Button} from "@/components/ui/button.tsx";
 
 interface ThirdStepProps {
     form: UseFormReturn<StepThreeExamForm>
+    startDateTime: string,
+    endDateTime: string,
+
 }
-export default function ExamThirdStepForm({form} : ThirdStepProps) {
+export default function ExamThirdStepForm({form, startDateTime, endDateTime} : ThirdStepProps) {
 
     const [selectedRooms, setSelectedRooms] = useState<IClassroomResponse[]>([]);
     // @ts-ignore
@@ -17,6 +20,9 @@ export default function ExamThirdStepForm({form} : ThirdStepProps) {
         name: "roomIds",
         control: form.control
     })
+
+
+
 
     const handleAddRooms = (classrooms : IClassroomResponse[]) => {
         setSelectedRooms([...classrooms]);
@@ -38,7 +44,7 @@ export default function ExamThirdStepForm({form} : ThirdStepProps) {
     return (
         <div className="space-y-6 py-6 md:py-12">
             <div className="flex justify-end">
-                <SelectRoomDialog handleAddRooms={handleAddRooms} trigger={
+                <SelectRoomDialog startDateTime={startDateTime} endDateTime={endDateTime}  handleAddRooms={handleAddRooms} trigger={
                     <div className="w-fit">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                              stroke="currentColor" className="size-5">

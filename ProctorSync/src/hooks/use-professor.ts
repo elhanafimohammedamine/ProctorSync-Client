@@ -31,7 +31,19 @@ export const useProfessor = () => {
 		}
 	})
 
+	const {data: professorsWithoutGroup, isLoading: professorsWithoutGroupsAreLoading} = useQuery({
+		queryKey: "professorsWithoutGroups",
+		queryFn: async () => await ProfessorApi.getProfessorsWithGroups(),
+		onSuccess: (data) => {
+			console.log(data);
+		},
+		onError: (error) => {
+			console.error(error);
+		}
+	});
+
 	const professors: IProfessorResponse[] = data;
+	const professorsWithoutGroups: IProfessorResponse[] = professorsWithoutGroup;
 
 	const createProfessor = async (data: IProfessorRequest) => await createProfessorMutation(data);
 
@@ -40,7 +52,9 @@ export const useProfessor = () => {
 		createProfessor,
 		professorInsertionIsLoading,
 		professors,
-		professorsAreLoading
+		professorsAreLoading,
+		professorsWithoutGroups,
+		professorsWithoutGroupsAreLoading
 
 	}
 

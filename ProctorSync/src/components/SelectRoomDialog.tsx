@@ -19,39 +19,26 @@ import Search from "@/components/Search.tsx";
 import {ReactNode, useState} from "react";
 import {IClassroomResponse} from "@/types/types.ts";
 import {buttonStyle} from "@/assets/style/CustomStyles.ts";
+import {useClassroom} from "@/hooks/use-classroom.ts";
 
 interface SelectRoomDialogProps {
 	trigger: ReactNode,
 	handleAddRooms: (Classrooms : IClassroomResponse[]) => void;
+	startDateTime: string,
+	endDateTime: string,
 }
 
-export default function SelectRoomDialog({trigger, handleAddRooms} : SelectRoomDialogProps) {
+export default function SelectRoomDialog({trigger, handleAddRooms, startDateTime, endDateTime} : SelectRoomDialogProps) {
 	const [selectedRooms, setSelectedRooms] = useState<IClassroomResponse[]>([]);
 	// @ts-ignore
 	const handleModalSearchInputChange = (query: string) => {
 
 	}
 
-	const rooms = [
-		{
-			id: "dsgsdgsfd",
-			name: "Salle 14",
-			bloc: "Bloc 1",
-			capacity: 12,
-		},
-		{
-			id: "dsgsdgfgdfgdfgsfd",
-			name: "Salle 15",
-			bloc: "Bloc 1",
-			capacity: 12,
-		},
-		{
-			id: "dsgsfdgdgdgfdgsfd",
-			name: "Salle 16",
-			bloc: "Bloc 1",
-			capacity: 12,
-		}
-	]
+
+	const {availableClassrooms} = useClassroom(startDateTime, endDateTime)
+
+
 	return (
 		<Dialog>
 			<DialogTrigger asChild className={cn(buttonStyle, "flex justify-end")}>
@@ -75,7 +62,7 @@ export default function SelectRoomDialog({trigger, handleAddRooms} : SelectRoomD
 								}
 							}}
 						>
-							{rooms?.map((room) => (
+							{availableClassrooms?.map((room) => (
 								<ToggleGroupItem
 									variant="outline"
 									className="w-full h-full"

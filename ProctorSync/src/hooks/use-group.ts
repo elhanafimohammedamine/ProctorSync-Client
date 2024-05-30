@@ -67,8 +67,22 @@ export const useGroup = (groupId?:string) => {
 	});
 
 
+	const {mutateAsync: deleteGroupMutation, isLoading: deleteGroupIsLoading} = useMutation({
+		mutationKey: "deleteGroup",
+		mutationFn: async (groupId: string) => await GroupApi.deleteGroup(groupId),
+		onSuccess: async (response) => {
+			await queryClient.invalidateQueries("groups");
+			return response;
+		},
+		onError: (error) => {
+			console.error('Error while deleting group', error)
+		}
+	});
+
+
 	const createGroup = async (group : IGroupRequest) => await createGroupMutation(group);
 	const addMembers = async (members: string[]) => await addMembersMutation(members);
+	const deleteGroup = async (groupId: string) => await deleteGroupMutation(groupId);
 
 
 	return {
@@ -79,7 +93,9 @@ export const useGroup = (groupId?:string) => {
 		group,
 		groupIsLoading,
 		addMembers,
-		addMembersIsLoading
+		addMembersIsLoading,
+		deleteGroup,
+		deleteGroupIsLoading
 	}
 
 }
