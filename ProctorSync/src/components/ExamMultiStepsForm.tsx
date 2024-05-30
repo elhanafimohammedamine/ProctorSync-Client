@@ -95,7 +95,7 @@ export default function ExamMultiStepsForm(){
 
             const startDateTime = format(new Date(`${startDate} ${startTime}`), 'yyyy-MM-dd HH:mm:ss')
             const duration = actualDuration ? actualDuration : plannedDuration
-            const endDateTime = format(addSeconds(new Date(startDateTime), parseInt(duration)), 'yyyy-MM-dd HH:mm:ss')
+            const endDateTime = format(addSeconds(new Date(startDateTime), duration), 'yyyy-MM-dd HH:mm:ss')
             return <ExamThirdStepForm startDateTime={startDateTime} endDateTime={endDateTime} form={stepThreeForm}/>
         }
 
