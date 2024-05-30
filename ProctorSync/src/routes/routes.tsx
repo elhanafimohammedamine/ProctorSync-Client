@@ -9,6 +9,10 @@ import LoginPage from "@/pages/LoginPage.tsx";
 import PersonalPage from "@/pages/personalPage.tsx";
 
 
+import ExamSchedulingPage from "@/pages/ExamSchedulingPage.tsx";
+
+
+
 export const router = createBrowserRouter([
     {
         path: "/login",
@@ -25,7 +29,8 @@ export const router = createBrowserRouter([
                     {path: "modules", element: <PedagogicalElementsPage/>},
                     {path: "salles", element: <ClassroomsPage/>},
                     {path: "groupes", element: <ProfessorsGroupsPage/>},
-                    {path: "groupe/membres", element: <GroupMembersPage/>}
+                    {path: "groupe/membres", element: <GroupMembersPage/>},
+                    {path: "test", element: <ExamSchedulingPage/>}
                 ]
             },
         ]
