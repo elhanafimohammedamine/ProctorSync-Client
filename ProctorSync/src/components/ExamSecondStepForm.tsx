@@ -130,7 +130,7 @@ export default function ExamSecondStepForm({form} : SecondStepProps) {
                             <FormItem>
                                 <FormLabel>Durée prévue</FormLabel>
                                 <FormControl>
-                                    <Select {...field} onValueChange={(value : string) => form.setValue("plannedDuration",value)}>
+                                    <Select value={String(field)} onValueChange={(value : string) => form.setValue("plannedDuration",parseInt(value))}>
                                         <SelectTrigger>
                                             <SelectValue placeholder="Durée prévue d'examen"/>
                                         </SelectTrigger>
@@ -154,7 +154,7 @@ export default function ExamSecondStepForm({form} : SecondStepProps) {
                             <FormItem>
                                 <FormLabel>Durée réelle</FormLabel>
                                 <FormControl>
-                                    <Select {...field} onValueChange={(value : string) => form.setValue("actualDuration",value)}>
+                                    <Select value={String(field)}  onValueChange={(value : string) => form.setValue("actualDuration",parseInt(value))}>
                                         <SelectTrigger>
                                             <SelectValue placeholder="Durée réelle d'examen"/>
                                         </SelectTrigger>

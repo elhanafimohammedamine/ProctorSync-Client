@@ -21,10 +21,10 @@ export const examSecondStepFormSchema = z.object({
     startTime: z.string({
         required_error: "Heure de début est requise"
     }),
-    plannedDuration: z.string({
+    plannedDuration: z.coerce.number({
         required_error: "Durée prévue est requise"
     }),
-    actualDuration: z.string().optional(),
+    actualDuration: z.coerce.number().optional(),
 }).refine((data) => {
     const isStartTimeValid = (startTime : string) => {
         const [hours, minutes] = startTime.split(":").map(Number);
@@ -34,14 +34,13 @@ export const examSecondStepFormSchema = z.object({
         return startTimeDate <= new Date(startTimeDate.getFullYear(), startTimeDate.getMonth(), startTimeDate.getDate(), 18, 30);
     };
 
-    const isDurationValid = (startTime : string, duration : string) => {
+    const isDurationValid = (startTime : string, duration : number) => {
         const [hours, minutes] = startTime.split(":").map(Number);
         const startTimeDate = new Date();
         startTimeDate.setHours(hours);
         startTimeDate.setMinutes(minutes);
 
-        const plannedDurationSeconds = parseInt(duration);
-        const plannedDurationMillis = plannedDurationSeconds * 1000;
+        const plannedDurationMillis = duration * 1000;
         const endTime = new Date(startTimeDate.getTime() + plannedDurationMillis);
 
         return endTime <= new Date(endTime.getFullYear(), endTime.getMonth(), endTime.getDate(), 18, 31);
