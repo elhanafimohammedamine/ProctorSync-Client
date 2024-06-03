@@ -8,7 +8,7 @@ export const examFirstStepFormSchema = z.object({
     }),
     subjectId: z.string({
         required_error: "La matière d'éxamen est requise",
-    }).optional(),
+    }),
     academicYear: z.string({
         required_error: "Année universitaire est requise"
     })

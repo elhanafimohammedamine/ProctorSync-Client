@@ -3,6 +3,7 @@ import {IGroupRequest} from "@/types/types.ts";
 
 
 export default {
+
 	createGroup: async (group: IGroupRequest) => {
 		const response = await axiosInstance.post("/group/create", group);
 		return response.data;

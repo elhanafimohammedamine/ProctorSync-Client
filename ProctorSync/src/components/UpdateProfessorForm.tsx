@@ -50,7 +50,12 @@ export default function UpdateProfessorForm({professor, toggleDialog} : Props) {
     const onSubmit = async (data: ProfessorSchema) => {
         await updateProfessor({
             id: professor?.id,
-            ...data
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            phone: data.phone,
+            branchId: data.branchId,
+            departmentId: data.departmentId,
         })
             .then(response => {
                 toast({

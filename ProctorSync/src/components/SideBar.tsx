@@ -17,7 +17,7 @@ export default function SideBar() {
                         <img className="h-full w-full object-cover" src={LogoImage}/>
                     </span>
                 </Link>
-                <TooltipProvider>
+               {/* <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger asChild>
                             <CustomNavLink to="/" contains="home" >
@@ -32,7 +32,7 @@ export default function SideBar() {
                         </TooltipTrigger>
                         <TooltipContent side="right">Dashboard</TooltipContent>
                     </Tooltip>
-                </TooltipProvider>
+                </TooltipProvider>*/}
                 <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger asChild>

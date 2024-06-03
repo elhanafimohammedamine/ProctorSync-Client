@@ -29,7 +29,7 @@ const blocs : string[] = [
 export default function EditClassroomFrom({classroom}: Props) {
 
 
-    const {updateClassroom} = useClassroom(classroom?.id);
+    const {updateClassroom} = useClassroom(undefined, undefined,classroom.id!);
 
 
     const editRoomForm = useForm<z.infer<typeof classroomSchema>>({
@@ -42,7 +42,7 @@ export default function EditClassroomFrom({classroom}: Props) {
     })
     async function onSubmit(values: z.infer<typeof classroomSchema>) {
         await updateClassroom({
-            id: classroom?.id,
+            id: classroom.id!,
             name: values.roomName,
             capacity: values.capacity,
             bloc: values.blocName
