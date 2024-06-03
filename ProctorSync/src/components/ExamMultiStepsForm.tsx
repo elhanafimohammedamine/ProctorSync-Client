@@ -139,7 +139,7 @@ export default function ExamMultiStepsForm(){
                                     <span className={cn(step.index < activeStep + 1 && "text-accent-foreground", "text-xs md:text-sm font-medium md:text-nowrap")}>{step.elementDescription}</span>
                                     {
                                         step.index < steps.length &&
-                                        <span className="h-0.5 hidden md:block rounded-full md:min-w-36 lg:min-w-48 w-full bg-slate-300 dark:bg-slate-500"></span>
+                                        <span className="h-0.5 hidden md:block rounded-full md:min-w-10 lg:min-w-36 w-full bg-slate-300 dark:bg-slate-500"></span>
                                     }
                                 </div>
                             ))}

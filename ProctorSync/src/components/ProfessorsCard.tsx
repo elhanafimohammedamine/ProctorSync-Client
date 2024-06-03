@@ -48,7 +48,7 @@ export default function ProfessorsCard() {
         <Card className="bg-card border-0" x-chunk="dashboard-06-chunk-0">
             <CardHeader className="px-4 md:px-6 flex flex-col md:flex-row items-center justify-between">
                 <div className="space-y-2">
-                    <CardTitle className="text-2xl md:text-3xl">Les enseignants</CardTitle>
+                    <CardTitle className="text-2xl md:text-3xl">Les Enseignants</CardTitle>
                     <CardDescription className="text-sm md:text-lg">
                         Gérer le personnel de la plate-forme et consulter leurs coordonnées.
                     </CardDescription>

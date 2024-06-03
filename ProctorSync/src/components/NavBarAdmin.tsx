@@ -11,9 +11,13 @@ import { ModeToggle } from "@/components/mode-toggle.tsx";
 import CustomNavLink from "@/components/CustomNavLink.tsx";
 import LogoDarkImage from "@/assets/images/proctorsyncTypoDark.svg"
 import LogoLightImage from "@/assets/images/proctorsyncTypoLight.svg"
+<<<<<<< Updated upstream
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store/store";
 import { useAuth } from "@/hooks/useAuth";
+=======
+import NoUserAvatar from "@/assets/images/nouser.png"
+>>>>>>> Stashed changes
 export default function NavBarAdmin() {
 
 
@@ -90,12 +94,17 @@ export default function NavBarAdmin() {
                             size="icon"
                             className="overflow-hidden rounded-full"
                         >
+<<<<<<< Updated upstream
                             <img
                                 src="/placeholder-user.jpg"
                                 width={36}
                                 height={36}
+=======
+                        <img
+                                src={NoUserAvatar}
+>>>>>>> Stashed changes
                                 alt="Avatar"
-                                className="overflow-hidden rounded-full"
+                                className="h-full w-full object-cover overflow-hidden rounded-full"
                             />
                         </Button>
                     </DropdownMenuTrigger>
@@ -105,6 +114,7 @@ export default function NavBarAdmin() {
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>
+<<<<<<< Updated upstream
                             <Link to="/admin/profile" className="flex justify-center gap-x-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -113,6 +123,8 @@ export default function NavBarAdmin() {
                             </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={logout}>
+=======
+>>>>>>> Stashed changes
                             <span className="flex justify-center gap-x-2 text-destructive">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     strokeWidth={1.5} stroke="currentColor" className="size-5">

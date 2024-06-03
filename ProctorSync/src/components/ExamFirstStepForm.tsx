@@ -45,7 +45,7 @@ export default function ExamFirstStepForm({form} : FirstStepProps) {
 
     return (
         <Form {... form}>
-            <form className="space-y-6 py-6 md:px-20 md:py-12">
+            <form className="space-y-6 py-6 md:px-12 md:py-8 lg:px-20 lg:py-12">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <FormField
                         control={form.control}

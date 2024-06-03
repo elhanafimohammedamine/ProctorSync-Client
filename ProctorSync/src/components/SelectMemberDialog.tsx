@@ -125,7 +125,7 @@ export default function SelectMemberDialog({trigger, groupId}: SelectPatientDial
 					<DialogClose asChild>
 						<div className="items-center flex space-x-2">
 							<Button size="sm" variant="outline" type="button" onClick={() => setSelectedProfessors([])}>Fermer</Button>
-							<Button size="sm" type="button" className="dark:bg-secondary flex gap-x-1 dark:text-white" onClick={handleAddMembers}>
+							<Button size="sm" type="button" className="flex gap-x-1 dark:text-white" onClick={handleAddMembers}>
 								<Plus className="size-4" />
 								Ajouter
 							</Button>

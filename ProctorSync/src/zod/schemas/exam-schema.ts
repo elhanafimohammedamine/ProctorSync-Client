@@ -8,7 +8,7 @@ export const examFirstStepFormSchema = z.object({
     }),
     subjectId: z.string({
         required_error: "La matière d'éxamen est requise",
-    }),
+    }).optional(),
     academicYear: z.string({
         required_error: "Année universitaire est requise"
     })
@@ -71,9 +71,11 @@ export const examSecondStepFormSchema = z.object({
 
 const roomSchema = z.object({
     roomId: z.string(),
+    monitorsCount: z.coerce.number(),
+    groupId: z.string()
 });
 export const examThirdStepFormSchema = z.object({
-    roomIds: z.array(roomSchema)
+    roomIds: z.array(roomSchema).nonempty({message : "Vous devez ajouter au moins un salle"})
 })
 
 export const FullExamFormSchema = z.union([examFirstStepFormSchema, examSecondStepFormSchema, examThirdStepFormSchema])

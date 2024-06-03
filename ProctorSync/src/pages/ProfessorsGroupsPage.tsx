@@ -43,25 +43,27 @@ export default function ProfessorsGroupsPage() {
 						className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
 					/>
 				</div>
-				<div className="flex flex-col gap-y-6 md:gap-y-12">
-					<div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5">
-						{groups?.map((group) => (
-							<GroupCard key={group.id} group={group}/>
-						))}
+				{groups.length > 0 && (
+					<div className="flex flex-col gap-y-6 md:gap-y-12">
+						<div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5">
+							{groups?.map((group) => (
+								<GroupCard key={group.id} group={group}/>
+							))}
+						</div>
+						<Paginator
+							currentPage={currentPage}
+							totalPages={totalPages}
+							onPageChange={(pageNumber) => handlePageChange(pageNumber)}
+							showPreviousNext
+						/>
 					</div>
-					<Paginator
-						currentPage={currentPage}
-						totalPages={totalPages}
-						onPageChange={(pageNumber) => handlePageChange(pageNumber)}
-						showPreviousNext
-					/>
-				</div>
+				)}
 				{groups?.length === 0 && (
 					<div
 						className="min-h-96 flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
 						x-chunk="dashboard-02-chunk-1">
 						<div className="flex flex-col items-center gap-1 text-center">
-							<h3 className="text-lg md:text-xl text-muted-foreground italic tracking-tight">
+							<h3 className="text-lg text-muted-foreground italic tracking-tight">
 								Aucun groupe pour le moment
 							</h3>
 						</div>
