@@ -15,37 +15,11 @@ import {
     SelectTrigger,
     SelectValue
 } from "@/components/ui/select.tsx";
+import {calculateDurationInSeconds, durations, generateTimeOptions} from "@/helpers/HelperTimeFunctions.ts";
 interface SecondStepProps {
     form: UseFormReturn<StepTwoExamForm>
 }
 export default function ExamSecondStepForm({form} : SecondStepProps) {
-    const generateTimeOptions = () => {
-        const options = [];
-        for (let hour = 8; hour <= 16; hour++) {
-            for (let minute = 0; minute < 60; minute += 30) {
-                const formattedHour = hour.toString().padStart(2, '0');
-                const formattedMinute = minute.toString().padStart(2, '0');
-                options.push(`${formattedHour}:${formattedMinute}`);
-            }
-        }
-        return options;
-    };
-
-    const calculateDurationInSeconds = (hours : number, minutes: number) => {
-        return (hours * 3600) + (minutes * 60);
-    };
-
-    const durations: {label: string, value: number}[] = [];
-    for (let hours = 0; hours <= 3; hours++) {
-        const startMinutes = hours === 0 ? 45 : 0;
-
-        for (let minutes = startMinutes; minutes < 60; minutes += 15) {
-            const durationInSeconds = calculateDurationInSeconds(hours, minutes);
-            const label = `${hours > 0 ? hours + " heure" + (hours > 1 ? "s" : "") : ""} ${minutes > 0 ? minutes + " minute" + (minutes > 1 ? "s" : "") : ""}`;
-
-            durations.push({ label, value: durationInSeconds });
-        }
-    }
 
     return (
         <Form {... form}>
@@ -130,7 +104,7 @@ export default function ExamSecondStepForm({form} : SecondStepProps) {
                             <FormItem>
                                 <FormLabel>Durée prévue</FormLabel>
                                 <FormControl>
-                                    <Select value={String(field)} onValueChange={(value : string) => form.setValue("plannedDuration",parseInt(value))}>
+                                    <Select value={field.value ? String(field.value) : undefined} onValueChange={(value : string) => form.setValue("plannedDuration",parseInt(value))}>
                                         <SelectTrigger>
                                             <SelectValue placeholder="Durée prévue d'examen"/>
                                         </SelectTrigger>
@@ -154,7 +128,7 @@ export default function ExamSecondStepForm({form} : SecondStepProps) {
                             <FormItem>
                                 <FormLabel>Durée réelle</FormLabel>
                                 <FormControl>
-                                    <Select value={String(field)}  onValueChange={(value : string) => form.setValue("actualDuration",parseInt(value))}>
+                                    <Select value={field.value ? String(field.value) : undefined}  onValueChange={(value : string) => form.setValue("actualDuration",parseInt(value))}>
                                         <SelectTrigger>
                                             <SelectValue placeholder="Durée réelle d'examen"/>
                                         </SelectTrigger>

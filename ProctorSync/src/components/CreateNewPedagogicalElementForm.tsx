@@ -15,8 +15,13 @@ import {useProfessor} from "@/hooks/use-professor.ts";
 import {usePedagogicElement} from "@/hooks/use-pedagogic-element.ts";
 import {useToast} from "@/components/ui/use-toast.ts";
 
+interface Props {
+	onClose: () => void;
+}
 
-export default function CreateNewPedagogicalElementForm() {
+
+
+export default function CreateNewPedagogicalElementForm({ onClose } : Props) {
 	const { toast } = useToast()
 
 	const {createPedagogicElement} =  usePedagogicElement()
@@ -33,12 +38,13 @@ export default function CreateNewPedagogicalElementForm() {
 			...data
 		})
 			.then((response) => {
+				onClose();
 				toast({
 					description: response
 				})
 			})
 			.catch()
-
+			
 
 	}
 
@@ -60,7 +66,7 @@ export default function CreateNewPedagogicalElementForm() {
 									<FormControl>
 										<Input className="bg-muted/10" type="text"  {...field}/>
 									</FormControl>
-									<FormMessage className="text-xs" />
+									<FormMessage className="text-xs font-medium" />
 								</FormItem>
 							)}
 						/>
@@ -86,7 +92,7 @@ export default function CreateNewPedagogicalElementForm() {
 												</SelectContent>
 											</Select>
 										</FormControl>
-										<FormMessage />
+										<FormMessage className="text-xs font-medium" />
 									</FormItem>
 								)}
 							/>
@@ -111,7 +117,7 @@ export default function CreateNewPedagogicalElementForm() {
 												</SelectContent>
 											</Select>
 										</FormControl>
-										<FormMessage />
+										<FormMessage className="text-xs font-medium" />
 									</FormItem>
 								)}
 							/>
@@ -137,7 +143,7 @@ export default function CreateNewPedagogicalElementForm() {
 											</SelectContent>
 										</Select>
 									</FormControl>
-									<FormMessage />
+									<FormMessage className="text-xs font-medium" />
 								</FormItem>
 							)}
 						/>
@@ -162,7 +168,7 @@ export default function CreateNewPedagogicalElementForm() {
 											</SelectContent>
 										</Select>
 									</FormControl>
-									<FormMessage />
+									<FormMessage className="text-xs font-medium" />
 								</FormItem>
 							)}
 						/>
@@ -171,7 +177,8 @@ export default function CreateNewPedagogicalElementForm() {
 								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
 									<path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
 								</svg>
-								Créer</Button>
+								Créer
+							</Button>
 						</div>
 					</div>
 				</form>

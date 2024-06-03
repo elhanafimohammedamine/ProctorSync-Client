@@ -1,3 +1,4 @@
+import { JwtPayload } from "jwt-decode";
 
 
 export interface IUser {
@@ -24,6 +25,17 @@ export interface IProfessorRequest {
 	departmentId: string;
 }
 
+export interface IProfessorUpdateRequest {
+	id: string
+	firstName: string;
+	lastName: string;
+	email: string;
+	phone: string;
+	branchId: string;
+	departmentId: string;
+}
+
+
 export interface IProfessorResponse {
 	id: string;
 	firstName: string;
@@ -31,10 +43,20 @@ export interface IProfessorResponse {
 	email: string;
 	phone: string;
 	createdAt: string;
+	branchId: string;
+	departmentId: string;
 }
 
 
 export interface IAdministratorRequest {
+	firstName: string;
+	lastName: string;
+	email: string;
+	phone: string;
+}
+
+export interface IAdministratorUpdateRequest {
+	id: string;
 	firstName: string;
 	lastName: string;
 	email: string;
@@ -151,4 +173,13 @@ export interface IExamTypeResponse {
 export interface IDateRangeRequest {
 	startDateTime: string;
 	endDateTime: string;
+}
+
+
+export interface IJwtPayload extends JwtPayload {
+	roles: string[];
+	firstName: string;
+	lastName: string;
+	phone: string;
+	email: string;
 }

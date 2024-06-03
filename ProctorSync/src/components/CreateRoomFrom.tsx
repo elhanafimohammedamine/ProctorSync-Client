@@ -15,12 +15,21 @@ import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {classroomSchema} from "@/zod/schemas/classroom-schema.ts";
 import {useClassroom} from "@/hooks/use-classroom.ts";
+import { toast } from "./ui/use-toast";
+const blocs: string[] = ["Bloc A", "Bloc B", "Amphi"];
 
-export default function CreateRoomFrom() {
-    const blocs : string[] = ["Bloc A", "Bloc B", "Amphi"];
+
+interface Props {
+
+    onClose: () => void;
+}
+
+export default function CreateRoomFrom({onClose}: Props) {
+    
     const createRoomForm = useForm<z.infer<typeof classroomSchema>>({
         resolver: zodResolver(classroomSchema),
     })
+
     const {createClassroom} = useClassroom();
     async function onSubmit(values: z.infer<typeof classroomSchema>) {
 
@@ -30,10 +39,14 @@ export default function CreateRoomFrom() {
             capacity: values.capacity
 
         })
-            .then()
+            .then(response => {
+                onClose()
+                toast({
+                    description: response
+                })
+            })
             .catch();
 
-        // TODO: Add a toast to show the success message
     }
     return(
         <Form {... createRoomForm}>

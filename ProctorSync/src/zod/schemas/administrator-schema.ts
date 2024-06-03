@@ -1,7 +1,7 @@
 import {z} from "zod";
 
 
-export const newProfSchema = z.object({
+export const administratorSchema = z.object({
 
 	firstName: z.string({
 		required_error: "Le prénom est requis.",
@@ -32,15 +32,9 @@ export const newProfSchema = z.object({
 		.max(13, {message: 'Le numéro de téléphone ne doit pas dépasser 13 caractères.'})
 		.regex(new RegExp('^\\+?\\d{1,3}\\d{1,9}$'), {message: 'Le numéro de téléphone est invalid.'}),
 
-	branchId: z.string({
-		required_error: "La filière est requise.",
-	}),
-	departmentId: z.string({
-		required_error: "Le département est requis.",
 
-	})
 });
 
 
 
-export type NewProfSchema = z.infer<typeof newProfSchema>;
+export type AdministartorSchema = z.infer<typeof administratorSchema>;

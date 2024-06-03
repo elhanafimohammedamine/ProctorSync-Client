@@ -1,18 +1,20 @@
-import {useMutation, useQuery} from "react-query";
+import {useMutation, useQuery, useQueryClient} from "react-query";
 import AdministratorApi from "@/APIs/administrator-api.ts";
-import {IAdministratorRequest, IAdministratorResponse} from "@/types/types.ts";
+import {IAdministratorRequest, IAdministratorResponse, IAdministratorUpdateRequest} from "@/types/types.ts";
 
 
 
-export const useAdministrator = () => {
+
+export const useAdministrator = (administratorId?: string) => {
 
 
+	const queryClient = useQueryClient();
 
 	const {mutateAsync: createAdministratorMutation, isLoading: administratorInsertionIsLoading} = useMutation({
 		mutationKey: "createAdministrator",
 		mutationFn: async (data: IAdministratorRequest) => AdministratorApi.createAdministrator(data),
-		onSuccess: (response) => {
-			console.log(response)
+		onSuccess: () => {
+			queryClient.invalidateQueries(['administrators'])
 		},
 		onError: (error) => {
 			console.error('Error while creating professor', error)
@@ -31,15 +33,43 @@ export const useAdministrator = () => {
 		}
 	});
 
+	const { mutateAsync: deleteAdminMutation } = useMutation({
+		mutationKey: "deleteAdministrator",
+		mutationFn: async (id: string) => AdministratorApi.deleteAdministartor(id),
+		onSuccess: async () => {
+			await queryClient.invalidateQueries('administrators');
+		},
+		onError: (error) => {
+			console.error(error);
+		}
+	})
+
+
+	const { mutateAsync: updateAdministratorMutation } = useMutation({
+		mutationKey: "updateAdministrator",
+		mutationFn: async (administrator: IAdministratorUpdateRequest) => await AdministratorApi.UpdateAdministrator(administratorId!, administrator),
+		onSuccess: async () => {
+			queryClient.invalidateQueries(['administrators'])
+		},
+		onError: (error) => {
+			console.error(error);
+		}
+		
+	})
+
 
 	const administrators: IAdministratorResponse[] = data;
 	const createAdministrator = async (data: IAdministratorRequest) => await createAdministratorMutation(data);
+	const deleteAdministrator = async (id: string) => await deleteAdminMutation(id);
+	const updateAdministrator = async (administrator: IAdministratorUpdateRequest) => await updateAdministratorMutation(administrator);
 
 	return {
 		administrators,
 		administratorsAreLoading,
 		createAdministrator,
-		administratorInsertionIsLoading
+		administratorInsertionIsLoading,
+		deleteAdministrator,
+		updateAdministrator
 
 	};
 

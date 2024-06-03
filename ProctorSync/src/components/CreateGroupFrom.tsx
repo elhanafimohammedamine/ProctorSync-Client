@@ -10,11 +10,10 @@ import {useGroup} from "@/hooks/use-group.ts";
 import {toast} from "@/components/ui/use-toast.ts";
 
 interface Props {
-
-    toggleDialog: () => void;
+    onClose: () => void;
 }
 
-export default function CreateGroupFrom({toggleDialog}: Props) {
+export default function CreateGroupFrom({onClose}: Props) {
     const {createGroup} = useGroup();
 
     const createGroupForm = useForm<z.infer<typeof groupFormSchema>>({
@@ -27,13 +26,13 @@ export default function CreateGroupFrom({toggleDialog}: Props) {
             description: values.description as string,
         })
             .then(response => {
+                onClose()
                 toast({
                     description: response
                 })
             })
             .catch();
 
-        // TODO: add toast notification for success or error
     }
     return(
         <Form {... createGroupForm}>
@@ -67,9 +66,9 @@ export default function CreateGroupFrom({toggleDialog}: Props) {
                     />
                 </div>
                 <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
-                    <Button className="space-x-2  w-full md:w-fit" onClick={toggleDialog}>
+                    <Button className="space-x-2  w-full md:w-fit">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                             stroke="currentColor" className="size-4">
+                            stroke="currentColor" className="size-4">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
                         </svg>
                         <span>Créer</span>

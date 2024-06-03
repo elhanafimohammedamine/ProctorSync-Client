@@ -1,10 +1,12 @@
 import Sidebar from "@/components/SideBar.tsx";
 import NavBarAdmin from "@/components/NavBarAdmin.tsx";
 import {Outlet} from "react-router-dom";
-import {Footer} from "@/components/Footer.tsx";
+import {Footer} from "@/layout/Footer";
 import {ScrollToTop} from "@/components/ScrollToTop.tsx";
 
 export default function DefaultLayoutAdmin() {
+   
+  
     return (
         <>
             <NavBarAdmin/>

@@ -1,18 +1,19 @@
-import {useMutation, useQuery} from "react-query";
+import {useMutation, useQuery, useQueryClient} from "react-query";
 import ProfessorApi from "@/APIs/professor-api.ts";
-import {IProfessorRequest, IProfessorResponse} from "@/types/types.ts";
+import {IProfessorRequest, IProfessorResponse, IProfessorUpdateRequest} from "@/types/types.ts";
 
 
-export const useProfessor = () => {
+export const useProfessor = (professorId?: string) => {
 
 
+	const queryClient = useQueryClient();
 
 
 	const {mutateAsync: createProfessorMutation, isLoading: professorInsertionIsLoading} = useMutation({
 		mutationKey: "createProfessor",
 		mutationFn: async (data: IProfessorRequest) => ProfessorApi.createProfessor(data),
-		onSuccess: (response) => {
-			console.log(response)
+		onSuccess: async () => {
+			await queryClient.invalidateQueries(['professors'])
 		},
 		onError: (error) => {
 			console.error('Error while creating professor', error)
@@ -23,9 +24,6 @@ export const useProfessor = () => {
 	const {data, isLoading: professorsAreLoading} = useQuery({
 		queryKey: "professors",
 		queryFn: async () => await ProfessorApi.getProfessors(),
-		onSuccess: (data) => {
-			console.log(data);
-		},
 		onError: (error) => {
 			console.error(error);
 		}
@@ -42,10 +40,37 @@ export const useProfessor = () => {
 		}
 	});
 
+	const { mutateAsync: deleteProfessorMutation } = useMutation({
+		mutationKey: "deleteProfessor",
+		mutationFn: async (id: string) => await ProfessorApi.deleteProfessor(id),
+		onSuccess: async (data) => {
+			queryClient.invalidateQueries(['professors'])
+			console.log(data)
+		},
+		onError: (error) => {
+			console.error(error);
+		}
+	})
+
+
+	const { mutateAsync: updateProfMutation } = useMutation({
+		mutationKey: "updateProfessor",
+		mutationFn: async (professor: IProfessorUpdateRequest) => await ProfessorApi.updateProfessor(professorId!, professor),
+		onSuccess: async (res) => {
+			queryClient.invalidateQueries(['professors'])
+			console.log(res)
+		},
+		onError: (error) => {
+			console.error(error);
+		},
+	})
+
 	const professors: IProfessorResponse[] = data;
 	const professorsWithoutGroups: IProfessorResponse[] = professorsWithoutGroup;
 
 	const createProfessor = async (data: IProfessorRequest) => await createProfessorMutation(data);
+	const deleteProfessor = async (id: string) => await deleteProfessorMutation(id);
+	const updateProfessor = async (professor: IProfessorUpdateRequest) => await updateProfMutation(professor);
 
 
 	return {
@@ -54,7 +79,9 @@ export const useProfessor = () => {
 		professors,
 		professorsAreLoading,
 		professorsWithoutGroups,
-		professorsWithoutGroupsAreLoading
+		professorsWithoutGroupsAreLoading,
+		deleteProfessor,
+		updateProfessor
 
 	}
 

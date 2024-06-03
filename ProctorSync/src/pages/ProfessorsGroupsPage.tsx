@@ -5,15 +5,14 @@ import {Search} from "lucide-react";
 import {Input} from "@/components/ui/input.tsx";
 import Paginator from "@/components/Paginator.tsx";
 import {useState} from "react";
-import {Button} from "@/components/ui/button.tsx";
-import CreateGroupDialog from "@/components/CreateGroupDialog.tsx";
 import {useGroup} from "@/hooks/use-group.ts";
 import {Loader} from "@/components/Loader.tsx";
+import CreateNewGroupDialog from "@/components/CreateNewGroupDialog";
+
 
 
 export default function ProfessorsGroupsPage() {
-	const [isDialogOpen, setIsDialogOpen] = useState(false);
-	const toggleDialog = () => setIsDialogOpen(!isDialogOpen)
+
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	// @ts-ignore
 	const [totalPages, setTotalPages] = useState<number>(1);
@@ -33,15 +32,7 @@ export default function ProfessorsGroupsPage() {
 					<CardTitle className="text-2xl md:text-3xl">Gérer les Groupes</CardTitle>
 					<CardDescription className="text-sm md:text-lg">Suivre et gérer tous les groupes sur la plateforme</CardDescription>
 				</CardHeader>
-				<div className="px-4 md:px-6 w-full md:w-fit">
-					<Button onClick={toggleDialog} className="w-full md:w-fit">
-						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
-							<path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
-						</svg>
-						<span>Ajouter Groupe</span>
-					</Button>
-					<CreateGroupDialog isOpen={isDialogOpen} toggleOpen={toggleDialog}/>
-				</div>
+				<CreateNewGroupDialog />
 			</div>
 			<CardContent className="p-4 md:p-6 space-y-6 md:space-y-12">
 				<div className="relative flex-1 md:grow-0">

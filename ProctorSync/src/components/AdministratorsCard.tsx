@@ -7,7 +7,7 @@ import {
 	DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu.tsx";
 import {Button} from "@/components/ui/button.tsx";
-import {MoreHorizontal, Search} from "lucide-react";
+import {MoreHorizontal, Search, SquarePen, Trash2} from "lucide-react";
 import {ScrollArea, ScrollBar} from "@/components/ui/scroll-area.tsx";
 import Paginator from "@/components/Paginator.tsx";
 import {Input} from "@/components/ui/input.tsx";
@@ -17,6 +17,8 @@ import {format} from "date-fns";
 import {useAdministrator} from "@/hooks/use-administrator.ts";
 import CreateNewAdministratorDialog from "@/components/CreateNewAdministratorDialog.tsx";
 import {Loader} from "@/components/Loader.tsx";
+import UpdateAdministratorDialog from "./UpdateAdministratorDialog";
+import DeleteAdministartorConfirmationDialog from "./DeleteAdministartorConfirmationDialog";
 
 export default function AdministratorsCard() {
 	const [currentPage, setCurrentPage] = useState<number>(1);
@@ -28,6 +30,16 @@ export default function AdministratorsCard() {
 	const handlePageChange = (currentPage : number) => {
 		setCurrentPage(currentPage);
 	};
+
+
+	const [updateDialogIsOpen, setUpdateDialogIsOpen] = useState(false);
+	const toggleUpdateDialog = () => setUpdateDialogIsOpen(!updateDialogIsOpen);
+
+
+	const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
+	const toggleDeleteDialog = () => setDeleteDialogIsOpen(!deleteDialogIsOpen);
+
+
 
 
 	const {administrators, administratorsAreLoading} = useAdministrator();
@@ -96,7 +108,7 @@ export default function AdministratorsCard() {
 										{format(administrator?.createdAt, "yyyy-MM-dd HH:mm a")}
 									</TableCell>
 									<TableCell>
-										<DropdownMenu>
+									<DropdownMenu>
 											<DropdownMenuTrigger asChild>
 												<Button
 													aria-haspopup="true"
@@ -109,14 +121,18 @@ export default function AdministratorsCard() {
 											</DropdownMenuTrigger>
 											<DropdownMenuContent align="end">
 												<DropdownMenuLabel>Actions</DropdownMenuLabel>
-												<DropdownMenuItem>
-													action2
+												<DropdownMenuItem className="flex items-center gap-x-1.5" onClick={toggleUpdateDialog}>
+													<SquarePen className="h-4 w-4"/>
+													Modifier
 												</DropdownMenuItem>
-												<DropdownMenuItem>
-													action1
+												<DropdownMenuItem className="text-red-600 flex items-center gap-x-1.5" onClick={toggleDeleteDialog}>
+													<Trash2 className="h-4 w-4"/>
+													Supprimer
 												</DropdownMenuItem>
 											</DropdownMenuContent>
 										</DropdownMenu>
+										<DeleteAdministartorConfirmationDialog isOpen={deleteDialogIsOpen} toggleOpen={toggleDeleteDialog} administratorId={administrator?.id} />
+										<UpdateAdministratorDialog administartor={administrator} isOpen={updateDialogIsOpen} toggleOpen={toggleUpdateDialog} />
 									</TableCell>
 								</TableRow>
 							)) : (
@@ -126,8 +142,6 @@ export default function AdministratorsCard() {
 									</TableCell>
 								</TableRow>
 							)}
-
-
 						</TableBody>
 					</Table>
 					<ScrollBar orientation="horizontal"/>
